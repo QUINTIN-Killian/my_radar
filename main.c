@@ -6,6 +6,11 @@
 ** main
 */
 /*
+USAGE :
+    add(&planes_list, node);
+    disp(&planes_list);
+    del(&planes_list, 777);
+    disp(&planes_list);
 NOTES :
 */
 
@@ -14,15 +19,15 @@ NOTES :
 
 static void print_help(void)
 {
-    my_putstr("Welcome in the my_radar simulation !\n\n");
-    my_putstr("This project simulates the trajectory of planes.\n");
-    my_putstr("Their goal is to reach their final destination.\n");
-    my_putstr("If they hit eachother, they crash.\n");
-    my_putstr("They can't crash if they are in the view range of ");
-    my_putstr("a control tower.\n");
-    my_putstr("Usage :\n");
-    my_putstr("    ./my_radar <file>\n");
-    my_putstr("\nCreated by Killian QUINTIN.\n");
+    my_putstr("Air traffic simulation panel\n\n");
+    my_putstr("USAGE\n");
+    my_putstr(" ./my_radar [OPTIONS] path_to_script\n");
+    my_putstr("  path_to_script     The path to the script file.\n\n");
+    my_putstr("OPTIONS\n");
+    my_putstr(" -h                print the usage and quit.\n\n");
+    my_putstr("USER INTERACTIONS\n");
+    my_putstr(" 'L' key enable/disable hitboxes and areas.\n");
+    my_putstr(" 'S' key enable/disable sprites.\n");
 }
 
 static int help(int ac, char **av)
@@ -37,12 +42,20 @@ static int help(int ac, char **av)
 int main(int ac, char **av)
 {
     window_t window;
+    linked_planes_t *planes_list = NULL;
+    linked_towers_t *towers_list = NULL;
+    char **word_array;
 
     if (help(ac, av))
         return 0;
-    if (error_handling(ac, av))
+    word_array = error_handling(ac, av);
+    if (word_array == NULL)
         return 84;
     init_window(&window);
+    add_elt(word_array, &window, &planes_list, &towers_list);
+    disp_planes_list(&planes_list);
+    disp_towers_list(&towers_list);
     main_screen(&window);
+    sfRenderWindow_destroy(window.window_info);
     return 0;
 }

@@ -11,6 +11,8 @@
 
 void init_window(window_t *window)
 {
+    window->id_planes = 0;
+    window->id_towers = 0;
     window->video_mode.height = 600;
     window->video_mode.width = 800;
     window->video_mode.bitsPerPixel = 64;

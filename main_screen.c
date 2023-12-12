@@ -11,11 +11,9 @@
 
 void main_screen(window_t *window)
 {
-    sfEvent event;
-
     while (sfRenderWindow_isOpen(window->window_info)) {
         sfRenderWindow_clear(window->window_info, sfBlack);
-        close_window(&event, window);
+        get_event(window);
         sfRenderWindow_display(window->window_info);
     }
 }

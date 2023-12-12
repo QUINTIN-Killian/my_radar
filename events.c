@@ -9,8 +9,17 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void close_window(sfEvent *event, window_t *window)
+static void close_window(sfEvent *event, window_t *window)
 {
     if (event->type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape))
         sfRenderWindow_close(window->window_info);
+}
+
+void get_event(window_t *window)
+{
+    sfEvent event;
+
+    while (sfRenderWindow_pollEvent(window->window_info, &event)) {
+        close_window(&event, window);
+    }
 }

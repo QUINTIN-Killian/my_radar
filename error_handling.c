@@ -9,9 +9,9 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-int error_handling(int ac, char **av)
+char **error_handling(int ac, char **av)
 {
     if (ac != 2)
-        return 1;
-    return 0;
+        return NULL;
+    return get_buffer_file(av[1]);
 }
