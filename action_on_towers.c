@@ -47,6 +47,7 @@ static void free_node(linked_towers_t *node)
 {
     sfSprite_destroy(node->tower_sprite);
     sfTexture_destroy(node->tower_texture);
+    sfCircleShape_destroy(node->range);
     free(node);
 }
 
@@ -92,12 +93,23 @@ static void init_new_node_sprite(linked_towers_t *new_node)
 {
     new_node->tower_sprite = sfSprite_create();
     new_node->tower_texture =
-    sfTexture_createFromFile("pictures/tower.png", NULL);
+    sfTexture_createFromFile("pictures/tower2.png", NULL);
     sfSprite_setTexture(new_node->tower_sprite,
     new_node->tower_texture, sfFalse);
     sfSprite_setPosition(new_node->tower_sprite, (sfVector2f)
     {new_node->tower_pos.x, new_node->tower_pos.y});
     sfSprite_setScale(new_node->tower_sprite, (sfVector2f){0.2, 0.2});
+    new_node->range = sfCircleShape_create();
+    sfCircleShape_setPosition(new_node->range, (sfVector2f)
+    {new_node->tower_pos.x +
+    sfTexture_getSize(new_node->tower_texture).x * 0.2 /
+    2 - new_node->radius, new_node->tower_pos.y +
+    sfTexture_getSize(new_node->tower_texture).y * 0.2 / 2 -
+    new_node->radius});
+    sfCircleShape_setRadius(new_node->range, (float)new_node->radius);
+    sfCircleShape_setOutlineThickness(new_node->range, 3.0);
+    sfCircleShape_setOutlineColor(new_node->range, sfBlack);
+    sfCircleShape_setFillColor(new_node->range, sfTransparent);
 }
 
 void add_in_towers_list(linked_towers_t **towers_list,

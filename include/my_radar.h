@@ -58,9 +58,10 @@ typedef struct linked_list_towers {
     int id;
     sfVector2i tower_pos;
     int radius;
-    struct linked_list_towers *next;
     sfSprite *tower_sprite;
     sfTexture *tower_texture;
+    sfCircleShape *range;
+    struct linked_list_towers *next;
 } linked_towers_t;
 
 struct corner {

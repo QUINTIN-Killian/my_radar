@@ -27,6 +27,7 @@ void draw_towers(window_t *window, linked_towers_t **towers_list)
     while (node != NULL) {
         sfRenderWindow_drawSprite(window->window_info,
         node->tower_sprite, NULL);
+        sfRenderWindow_drawCircleShape(window->window_info, node->range, NULL);
         node = node->next;
     }
 }

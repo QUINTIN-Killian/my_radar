@@ -100,11 +100,6 @@ static void add_plane(window_t *window,
     plane->plane_info->speed = convert_str_in_int(word_array[*ind + 5]);
     plane->plane_info->delay = convert_str_in_int(word_array[*ind + 6]);
     *ind += 7;
-    plane->plane_info->plane_sprite = sfSprite_create();
-    plane->plane_info->plane_texture =
-    sfTexture_createFromFile("pictures/plane.png", NULL);
-    sfSprite_setTexture(plane->plane_info->plane_sprite,
-    plane->plane_info->plane_texture, sfFalse);
     add_in_planes_list(planes_list, plane);
 }
 
