@@ -14,8 +14,10 @@ void draw_planes(window_t *window, linked_planes_t **planes_list)
     linked_planes_t *node = *planes_list;
 
     while (node != NULL) {
-        sfRenderWindow_drawSprite(window->window_info,
-        node->plane_info->plane_sprite, NULL);
+        if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
+        >= node->plane_info->delay)
+            sfRenderWindow_drawSprite(window->window_info,
+            node->plane_info->plane_sprite, NULL);
         node = node->next;
     }
 }
