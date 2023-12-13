@@ -24,7 +24,7 @@ int my_planes_list_len(linked_planes_t **planes_list)
 
 static void disp_planes_list_aux(linked_planes_t *tmp)
 {
-    my_putstr("PLANE\nId : ");
+    my_putstr("Id : ");
     my_put_nbr(tmp->plane_info->id);
     my_putstr("\nDeparture coordinates : ");
     my_put_nbr(tmp->plane_info->departure_coords.x);
@@ -46,6 +46,7 @@ void disp_planes_list(linked_planes_t **planes_list)
     linked_planes_t **head = planes_list;
     linked_planes_t *tmp = *head;
 
+    my_putstr("PLANE :\n");
     if (tmp == NULL)
         my_putstr("NULL\n");
     while (tmp != NULL) {

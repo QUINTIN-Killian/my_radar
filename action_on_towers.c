@@ -27,10 +27,11 @@ void disp_towers_list(linked_towers_t **towers_list)
     linked_towers_t **head = towers_list;
     linked_towers_t *tmp = *head;
 
+    my_putstr("TOWER :\n");
     if (tmp == NULL)
         my_putstr("NULL\n");
     while (tmp != NULL) {
-        my_putstr("TOWER\nId : ");
+        my_putstr("Id : ");
         my_put_nbr(tmp->id);
         my_putstr("\nCoordinates : ");
         my_put_nbr(tmp->tower_pos.x);

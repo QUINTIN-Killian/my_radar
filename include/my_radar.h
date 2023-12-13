@@ -27,6 +27,10 @@ typedef struct background {
     sfSprite *background_sprite;
 } background_t;
 
+typedef struct music {
+    sfMusic *main_music;
+} music_t;
+
 typedef struct window {
     int id_planes;
     int id_towers;
@@ -35,6 +39,7 @@ typedef struct window {
     sfVideoMode video_mode;
     char *window_name;
     background_t *background;
+    music_t *music;
 } window_t;
 
 typedef struct plane {

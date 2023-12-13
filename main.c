@@ -12,7 +12,6 @@ USAGE :
     del(&planes_list, 777);
     disp(&planes_list);
 NOTES :
-    - afficher la range des tours de control
     - créer une clock globale et afficher les avions quand leur tour est arrivé
     - faire se déplacer les avions (en prenant en compte leur vitesse)
     - split l'écran en sous-écrans
@@ -28,6 +27,7 @@ static void destroy_main(window_t *window,
     linked_planes_t *tmp_plane;
     linked_towers_t *tmp_tower;
 
+    free(window->music);
     sfRenderWindow_destroy(window->window_info);
     sfSprite_destroy(window->background->background_sprite);
     sfTexture_destroy(window->background->background_texture);

@@ -9,7 +9,15 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void init_window(window_t *window)
+static void init_main_music(window_t *window)
+{
+    window->music = malloc(sizeof(music_t));
+    window->music->main_music = sfMusic_createFromFile("music/main_theme.ogg");
+    sfMusic_setLoop(window->music->main_music, sfTrue);
+    sfMusic_play(window->music->main_music);
+}
+
+static void init_background(window_t *window)
 {
     window->background = malloc(sizeof(background_t));
     window->background->background_sprite = sfSprite_create();
@@ -19,6 +27,12 @@ void init_window(window_t *window)
     window->background->background_texture, sfFalse);
     sfSprite_setScale(window->background->background_sprite,
     (sfVector2f){2.25, 2.3});
+}
+
+void init_window(window_t *window)
+{
+    init_main_music(window);
+    init_background(window);
     window->id_planes = 0;
     window->id_towers = 0;
     window->video_mode.height = 1080;
