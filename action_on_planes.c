@@ -56,6 +56,8 @@ void disp_planes_list(linked_planes_t **planes_list)
 
 static void free_node(linked_planes_t *node)
 {
+    sfSprite_destroy(node->plane_info->plane_sprite);
+    sfTexture_destroy(node->plane_info->plane_texture);
     free(node->plane_info);
     free(node);
 }
@@ -98,11 +100,26 @@ void del_in_planes_list(linked_planes_t **planes_list, int id_del)
     planes_list = head;
 }
 
+static void init_new_node_sprite(linked_planes_t *new_node)
+{
+    new_node->plane_info->plane_pos = new_node->plane_info->departure_coords;
+    new_node->plane_info->plane_sprite = sfSprite_create();
+    new_node->plane_info->plane_texture =
+    sfTexture_createFromFile("pictures/plane.png", NULL);
+    sfSprite_setTexture(new_node->plane_info->plane_sprite,
+    new_node->plane_info->plane_texture, sfFalse);
+    sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
+    {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
+    sfSprite_setScale(new_node->plane_info->plane_sprite,
+    (sfVector2f){0.2, 0.2});
+}
+
 void add_in_planes_list(linked_planes_t **planes_list,
     linked_planes_t *new_node)
 {
     linked_planes_t **head = planes_list;
 
+    init_new_node_sprite(new_node);
     new_node->next = *head;
     *head = new_node;
     planes_list = head;

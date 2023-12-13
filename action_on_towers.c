@@ -43,12 +43,19 @@ void disp_towers_list(linked_towers_t **towers_list)
     }
 }
 
+static void free_node(linked_towers_t *node)
+{
+    sfSprite_destroy(node->tower_sprite);
+    sfTexture_destroy(node->tower_texture);
+    free(node);
+}
+
 static linked_towers_t *del_first_node(linked_towers_t *current,
     linked_towers_t *tmp)
 {
     tmp = current;
     current = current->next;
-    free(tmp);
+    free_node(tmp);
     return current;
 }
 
@@ -65,7 +72,7 @@ static linked_towers_t *del_node(linked_towers_t **head, int id_del)
         if (current->next->id == id_del) {
             tmp = current->next;
             current->next = current->next->next;
-            free(tmp);
+            free_node(tmp);
             return *head;
         }
         current = current->next;
@@ -81,11 +88,24 @@ void del_in_towers_list(linked_towers_t **towers_list, int id_del)
     towers_list = head;
 }
 
+static void init_new_node_sprite(linked_towers_t *new_node)
+{
+    new_node->tower_sprite = sfSprite_create();
+    new_node->tower_texture =
+    sfTexture_createFromFile("pictures/tower.png", NULL);
+    sfSprite_setTexture(new_node->tower_sprite,
+    new_node->tower_texture, sfFalse);
+    sfSprite_setPosition(new_node->tower_sprite, (sfVector2f)
+    {new_node->tower_pos.x, new_node->tower_pos.y});
+    sfSprite_setScale(new_node->tower_sprite, (sfVector2f){0.2, 0.2});
+}
+
 void add_in_towers_list(linked_towers_t **towers_list,
     linked_towers_t *new_node)
 {
     linked_towers_t **head = towers_list;
 
+    init_new_node_sprite(new_node);
     new_node->next = *head;
     *head = new_node;
     towers_list = head;

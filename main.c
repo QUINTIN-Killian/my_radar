@@ -12,10 +12,35 @@ USAGE :
     del(&planes_list, 777);
     disp(&planes_list);
 NOTES :
+    - afficher la range des tours de control
+    - créer une clock globale et afficher les avions quand leur tour est arrivé
+    - faire se déplacer les avions (en prenant en compte leur vitesse)
+    - split l'écran en sous-écrans
+    - détruire les avions
 */
 
 #include "include/my.h"
 #include "include/my_radar.h"
+
+static void destroy_main(window_t *window,
+    linked_planes_t **planes_list, linked_towers_t **towers_list)
+{
+    linked_planes_t *tmp_plane;
+    linked_towers_t *tmp_tower;
+
+    sfRenderWindow_destroy(window->window_info);
+    sfSprite_destroy(window->background->background_sprite);
+    sfTexture_destroy(window->background->background_texture);
+    free(window->background);
+    while (*planes_list != NULL) {
+        tmp_plane = *planes_list;
+        del_in_planes_list(planes_list, tmp_plane->plane_info->id);
+    }
+    while (*towers_list != NULL) {
+        tmp_tower = *towers_list;
+        del_in_towers_list(towers_list, tmp_tower->id);
+    }
+}
 
 static void print_help(void)
 {
@@ -55,7 +80,7 @@ int main(int ac, char **av)
     add_elt(word_array, &window, &planes_list, &towers_list);
     disp_planes_list(&planes_list);
     disp_towers_list(&towers_list);
-    main_screen(&window);
-    sfRenderWindow_destroy(window.window_info);
+    main_screen(&window, &planes_list, &towers_list);
+    destroy_main(&window, &planes_list, &towers_list);
     return 0;
 }

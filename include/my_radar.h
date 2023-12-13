@@ -42,6 +42,7 @@ typedef struct plane {
     sfClock *clock;
     sfVector2i departure_coords;
     sfVector2i arrival_coords;
+    sfVector2i plane_pos;
     int speed;
     int delay;
     sfSprite *plane_sprite;
@@ -58,6 +59,8 @@ typedef struct linked_list_towers {
     sfVector2i tower_pos;
     int radius;
     struct linked_list_towers *next;
+    sfSprite *tower_sprite;
+    sfTexture *tower_texture;
 } linked_towers_t;
 
 struct corner {
@@ -78,7 +81,8 @@ char **error_handling(int ac, char **av);
 void init_window(window_t *window);
 
 //main_screen.c :
-void main_screen(window_t *window);
+void main_screen(window_t *window, linked_planes_t **planes_list,
+    linked_towers_t **towers_list);
 
 //action_on_planes.c :
 int my_planes_list_len(linked_planes_t **planes_list);
