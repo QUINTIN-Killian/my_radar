@@ -12,7 +12,7 @@ USAGE :
     del(&planes_list, 777);
     disp(&planes_list);
 NOTES :
-    - créer une clock globale et afficher les avions quand leur tour est arrivé
+    - afficher les avions quand leur tour est arrivé grâce a la clock globale
     - faire se déplacer les avions (en prenant en compte leur vitesse)
     - split l'écran en sous-écrans
     - détruire les avions
@@ -21,17 +21,12 @@ NOTES :
 #include "include/my.h"
 #include "include/my_radar.h"
 
-static void destroy_main(window_t *window,
-    linked_planes_t **planes_list, linked_towers_t **towers_list)
+static void destroy_main_aux(linked_planes_t **planes_list,
+    linked_towers_t **towers_list)
 {
     linked_planes_t *tmp_plane;
     linked_towers_t *tmp_tower;
 
-    free(window->music);
-    sfRenderWindow_destroy(window->window_info);
-    sfSprite_destroy(window->background->background_sprite);
-    sfTexture_destroy(window->background->background_texture);
-    free(window->background);
     while (*planes_list != NULL) {
         tmp_plane = *planes_list;
         del_in_planes_list(planes_list, tmp_plane->plane_info->id);
@@ -40,6 +35,23 @@ static void destroy_main(window_t *window,
         tmp_tower = *towers_list;
         del_in_towers_list(towers_list, tmp_tower->id);
     }
+}
+
+static void destroy_main(window_t *window,
+    linked_planes_t **planes_list, linked_towers_t **towers_list)
+{
+    sfClock_destroy(window->timer->clock);
+    sfText_destroy(window->timer->time);
+    sfFont_destroy(window->timer->time_font);
+    sfText_destroy(window->timer->time_value);
+    sfFont_destroy(window->timer->time_value_font);
+    free(window->timer);
+    free(window->music);
+    sfRenderWindow_destroy(window->window_info);
+    sfSprite_destroy(window->background->background_sprite);
+    sfTexture_destroy(window->background->background_texture);
+    free(window->background);
+    destroy_main_aux(planes_list, towers_list);
 }
 
 static void print_help(void)

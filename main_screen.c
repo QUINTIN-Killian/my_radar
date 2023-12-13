@@ -32,6 +32,19 @@ void draw_towers(window_t *window, linked_towers_t **towers_list)
     }
 }
 
+void draw_time(window_t *window)
+{
+    sfTime time_clock = sfClock_getElapsedTime(window->timer->clock);
+    float time = sfTime_asSeconds(time_clock);
+    char *tmp = convert_int_to_str((int)time);
+
+    sfText_setString(window->timer->time_value, tmp);
+    sfRenderWindow_drawText(window->window_info, window->timer->time, NULL);
+    sfRenderWindow_drawText(window->window_info,
+    window->timer->time_value, NULL);
+    free(tmp);
+}
+
 void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
@@ -41,6 +54,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         window->background->background_sprite, NULL);
         draw_planes(window, planes_list);
         draw_towers(window, towers_list);
+        draw_time(window);
         get_event(window);
         sfRenderWindow_display(window->window_info);
     }

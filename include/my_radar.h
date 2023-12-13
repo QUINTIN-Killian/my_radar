@@ -31,6 +31,14 @@ typedef struct music {
     sfMusic *main_music;
 } music_t;
 
+typedef struct timer {
+    sfClock *clock;
+    sfText *time;
+    sfFont *time_font;
+    sfText *time_value;
+    sfFont *time_value_font;
+} main_timer_t;
+
 typedef struct window {
     int id_planes;
     int id_towers;
@@ -40,6 +48,7 @@ typedef struct window {
     char *window_name;
     background_t *background;
     music_t *music;
+    main_timer_t *timer;
 } window_t;
 
 typedef struct plane {

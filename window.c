@@ -9,6 +9,22 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
+static void init_timer(window_t *window)
+{
+    window->timer = malloc(sizeof(main_timer_t));
+    window->timer->clock = sfClock_create();
+    window->timer->time = sfText_create();
+    window->timer->time_font = sfFont_createFromFile("font/Airport.otf");
+    sfText_setFont(window->timer->time, window->timer->time_font);
+    sfText_setString(window->timer->time, "TIME : ");
+    sfText_setColor(window->timer->time, sfBlack);
+    window->timer->time_value = sfText_create();
+    window->timer->time_value_font = sfFont_createFromFile("font/Airport.otf");
+    sfText_setFont(window->timer->time_value, window->timer->time_value_font);
+    sfText_setPosition(window->timer->time_value, (sfVector2f){70, 0});
+    sfText_setColor(window->timer->time_value, sfBlack);
+}
+
 static void init_main_music(window_t *window)
 {
     window->music = malloc(sizeof(music_t));
@@ -33,6 +49,7 @@ void init_window(window_t *window)
 {
     init_main_music(window);
     init_background(window);
+    init_timer(window);
     window->id_planes = 0;
     window->id_towers = 0;
     window->video_mode.height = 1080;
