@@ -53,6 +53,12 @@ static void destroy_main(window_t *window,
     sfText_destroy(window->timer->time_value);
     sfFont_destroy(window->timer->time_value_font);
     free(window->timer);
+    sfText_destroy(window->fps->fps);
+    sfFont_destroy(window->fps->fps_font);
+    sfText_destroy(window->fps->fps_value);
+    sfFont_destroy(window->fps->fps_value_font);
+    sfClock_destroy(window->fps->clock_fps);
+    free(window->fps);
     sfMusic_destroy(window->music->main_music);
     free(window->music);
     sfRenderWindow_destroy(window->window_info);

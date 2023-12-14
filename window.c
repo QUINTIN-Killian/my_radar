@@ -9,6 +9,22 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
+static void init_fps(window_t *window)
+{
+    window->fps = malloc(sizeof(game_fps_t));
+    window->fps->fps = sfText_create();
+    window->fps->fps_font = sfFont_createFromFile("font/Airport.otf");
+    sfText_setFont(window->fps->fps, window->fps->fps_font);
+    sfText_setString(window->fps->fps, "FPS : ");
+    sfText_setColor(window->fps->fps, sfBlack);
+    sfText_setPosition(window->fps->fps, (sfVector2f){0, 70});
+    window->fps->fps_value = sfText_create();
+    window->fps->fps_value_font = sfFont_createFromFile("font/Airport.otf");
+    sfText_setFont(window->fps->fps_value, window->fps->fps_value_font);
+    sfText_setColor(window->fps->fps_value, sfBlack);
+    sfText_setPosition(window->fps->fps_value, (sfVector2f){70, 70});
+}
+
 static void init_timer(window_t *window)
 {
     window->timer = malloc(sizeof(main_timer_t));
@@ -50,6 +66,7 @@ void init_window(window_t *window)
     init_main_music(window);
     init_background(window);
     init_timer(window);
+    init_fps(window);
     window->id_planes = 0;
     window->id_towers = 0;
     window->video_mode.height = 1080;

@@ -47,9 +47,28 @@ void draw_time(window_t *window)
     free(tmp);
 }
 
+void draw_fps(window_t *window)
+{
+    sfTime fps_clock = sfClock_getElapsedTime(window->fps->clock_fps);
+    float time = sfTime_asSeconds(fps_clock);
+    float fps = 1.0 / time;
+    char *tmp;
+    
+    if (fps > 120.0)
+        fps = 120.0;
+    tmp = convert_int_to_str(fps);
+    sfText_setString(window->fps->fps_value, tmp);
+    sfRenderWindow_drawText(window->window_info, window->fps->fps, NULL);
+    sfRenderWindow_drawText(window->window_info,
+    window->fps->fps_value, NULL);
+    free(tmp);
+    sfClock_restart(window->fps->clock_fps);
+}
+
 void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
+    window->fps->clock_fps = sfClock_create();
     while (sfRenderWindow_isOpen(window->window_info)) {
         sfRenderWindow_clear(window->window_info, sfBlack);
         sfRenderWindow_drawSprite(window->window_info,
@@ -58,6 +77,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         draw_towers(window, towers_list);
         draw_time(window);
         get_event(window);
+        draw_fps(window);
         sfRenderWindow_display(window->window_info);
     }
 }

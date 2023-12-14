@@ -39,6 +39,14 @@ typedef struct timer {
     sfFont *time_value_font;
 } main_timer_t;
 
+typedef struct game_fps {
+    sfClock *clock_fps;
+    sfText *fps;
+    sfFont *fps_font;
+    sfText *fps_value;
+    sfFont *fps_value_font;
+} game_fps_t;
+
 typedef struct window {
     int id_planes;
     int id_towers;
@@ -49,6 +57,7 @@ typedef struct window {
     background_t *background;
     music_t *music;
     main_timer_t *timer;
+    game_fps_t *fps;
 } window_t;
 
 typedef struct plane {
