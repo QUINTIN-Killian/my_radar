@@ -68,6 +68,7 @@ char **get_buffer_file(char *filepath)
     int len;
     int fd = open(filepath, O_RDONLY);
     char *buff;
+    char **word_array;
 
     if (fd == -1 || stat(filepath, &st) == -1) {
         close(fd);
@@ -80,7 +81,9 @@ char **get_buffer_file(char *filepath)
     if (len < 0)
         return NULL;
     close(fd);
-    return check_buffer_content(my_str_to_word_array(buff));
+    word_array = my_str_to_word_array(buff);
+    free(buff);
+    return check_buffer_content(word_array);
 }
 
 static void add_plane(window_t *window,

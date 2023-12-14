@@ -21,6 +21,13 @@ NOTES :
 #include "include/my.h"
 #include "include/my_radar.h"
 
+static void destroy_word_array(char **word_array)
+{
+    for (int i = 0; i < my_strlen_array(word_array); i++)
+        free(word_array[i]);
+    free(word_array);
+}
+
 static void destroy_main_aux(linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
@@ -46,6 +53,7 @@ static void destroy_main(window_t *window,
     sfText_destroy(window->timer->time_value);
     sfFont_destroy(window->timer->time_value_font);
     free(window->timer);
+    sfMusic_destroy(window->music->main_music);
     free(window->music);
     sfRenderWindow_destroy(window->window_info);
     sfSprite_destroy(window->background->background_sprite);
@@ -86,10 +94,13 @@ int main(int ac, char **av)
     if (help(ac, av))
         return 0;
     word_array = error_handling(ac, av);
-    if (word_array == NULL)
+    if (word_array == NULL) {
+        destroy_word_array(word_array);
         return 84;
+    }
     init_window(&window);
     add_elt(word_array, &window, &planes_list, &towers_list);
+    destroy_word_array(word_array);
     disp_planes_list(&planes_list);
     disp_towers_list(&towers_list);
     main_screen(&window, &planes_list, &towers_list);
