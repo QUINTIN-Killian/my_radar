@@ -61,28 +61,39 @@ char **check_buffer_content(char **word_array)
     return word_array;
 }
 
+static char **create_word_array(struct stat *st, int fd)
+{
+    int file_size = st->st_size;
+    int len;
+    char *buff;
+    char **word_array;
+
+    buff = malloc(sizeof(char) * (file_size + 1));
+    buff[file_size] = '\0';
+    len = read(fd, buff, file_size);
+    close(fd);
+    if (len < 0) {
+        free(buff);
+        return NULL;
+    }
+    word_array = my_str_to_word_array(buff);
+    free(buff);
+    return word_array;
+}
+
 char **get_buffer_file(char *filepath)
 {
     struct stat st;
-    int file_size = 0;
-    int len;
     int fd = open(filepath, O_RDONLY);
-    char *buff;
     char **word_array;
 
     if (fd == -1 || stat(filepath, &st) == -1) {
         close(fd);
         return NULL;
     }
-    file_size = st.st_size;
-    buff = malloc(sizeof(char) * (file_size + 1));
-    buff[st.st_size] = '\0';
-    len = read(fd, buff, file_size);
-    if (len < 0)
+    word_array = create_word_array(&st, fd);
+    if (word_array == NULL)
         return NULL;
-    close(fd);
-    word_array = my_str_to_word_array(buff);
-    free(buff);
     return check_buffer_content(word_array);
 }
 

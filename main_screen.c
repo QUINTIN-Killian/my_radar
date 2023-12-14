@@ -53,7 +53,7 @@ void draw_fps(window_t *window)
     float time = sfTime_asSeconds(fps_clock);
     float fps = 1.0 / time;
     char *tmp;
-    
+
     if (fps > 120.0)
         fps = 120.0;
     tmp = convert_int_to_str(fps);

@@ -28,12 +28,18 @@ static void destroy_word_array(char **word_array)
     free(word_array);
 }
 
-static void destroy_main_aux(linked_planes_t **planes_list,
+static void destroy_main_aux(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
     linked_planes_t *tmp_plane;
     linked_towers_t *tmp_tower;
 
+    sfMusic_destroy(window->music->main_music);
+    free(window->music);
+    sfRenderWindow_destroy(window->window_info);
+    sfSprite_destroy(window->background->background_sprite);
+    sfTexture_destroy(window->background->background_texture);
+    free(window->background);
     while (*planes_list != NULL) {
         tmp_plane = *planes_list;
         del_in_planes_list(planes_list, tmp_plane->plane_info->id);
@@ -53,19 +59,13 @@ static void destroy_main(window_t *window,
     sfText_destroy(window->timer->time_value);
     sfFont_destroy(window->timer->time_value_font);
     free(window->timer);
+    sfClock_destroy(window->fps->clock_fps);
     sfText_destroy(window->fps->fps);
     sfFont_destroy(window->fps->fps_font);
     sfText_destroy(window->fps->fps_value);
     sfFont_destroy(window->fps->fps_value_font);
-    sfClock_destroy(window->fps->clock_fps);
     free(window->fps);
-    sfMusic_destroy(window->music->main_music);
-    free(window->music);
-    sfRenderWindow_destroy(window->window_info);
-    sfSprite_destroy(window->background->background_sprite);
-    sfTexture_destroy(window->background->background_texture);
-    free(window->background);
-    destroy_main_aux(planes_list, towers_list);
+    destroy_main_aux(window, planes_list, towers_list);
 }
 
 static void print_help(void)
@@ -107,8 +107,6 @@ int main(int ac, char **av)
     init_window(&window);
     add_elt(word_array, &window, &planes_list, &towers_list);
     destroy_word_array(word_array);
-    disp_planes_list(&planes_list);
-    disp_towers_list(&towers_list);
     main_screen(&window, &planes_list, &towers_list);
     destroy_main(&window, &planes_list, &towers_list);
     return 0;
