@@ -7,6 +7,8 @@
 */
 /*
 NOTES :
+The program should display and update a timer in seconds at
+the top-right corner of the window -> ca va si c top left ????
     - split l'écran en sous-écrans (à tester => erreurs possibles)
     - faire se déplacer les avions (en prenant en compte leur vitesse)
     - détruire les avions lors de l'impact entre eux
