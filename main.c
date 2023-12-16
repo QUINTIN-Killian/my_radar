@@ -6,16 +6,10 @@
 ** main
 */
 /*
-USAGE :
-    add(&planes_list, node);
-    disp(&planes_list);
-    del(&planes_list, 777);
-    disp(&planes_list);
 NOTES :
-    - afficher les avions quand leur tour est arrivé grâce a la clock globale
+    - split l'écran en sous-écrans (à tester => erreurs possibles)
     - faire se déplacer les avions (en prenant en compte leur vitesse)
-    - split l'écran en sous-écrans
-    - détruire les avions
+    - détruire les avions lors de l'impact entre eux
 */
 
 #include "include/my.h"
