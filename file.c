@@ -114,7 +114,7 @@ static void add_plane(window_t *window,
     plane->plane_info->speed = convert_str_in_int(word_array[*ind + 5]);
     plane->plane_info->delay = convert_str_in_int(word_array[*ind + 6]);
     *ind += 7;
-    add_in_planes_list(planes_list, plane);
+    add_in_planes_list(planes_list, plane, 1);
 }
 
 static void add_tower(window_t *window,

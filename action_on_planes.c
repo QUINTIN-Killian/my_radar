@@ -9,6 +9,26 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
+linked_planes_t *cpy_plane_node(linked_planes_t *node)
+{
+    linked_planes_t *ans = malloc(sizeof(linked_planes_t));
+
+    ans->next = NULL;
+    ans->plane_info = malloc(sizeof(plane_t));
+    ans->plane_info->arrival_coords = node->plane_info->arrival_coords;
+    ans->plane_info->departure_coords = node->plane_info->departure_coords;
+    ans->plane_info->clock = node->plane_info->clock;
+    ans->plane_info->delay = node->plane_info->delay;
+    ans->plane_info->id = node->plane_info->id;
+    ans->plane_info->plane_pos = node->plane_info->plane_pos;
+    ans->plane_info->plane_texture =
+    sfTexture_copy(node->plane_info->plane_texture);
+    ans->plane_info->plane_sprite =
+    sfSprite_copy(node->plane_info->plane_sprite);
+    ans->plane_info->speed = node->plane_info->speed;
+    return ans;
+}
+
 int my_planes_list_len(linked_planes_t **planes_list)
 {
     linked_planes_t **head = planes_list;
@@ -117,12 +137,12 @@ static void init_new_node_sprite(linked_planes_t *new_node)
 }
 
 void add_in_planes_list(linked_planes_t **planes_list,
-    linked_planes_t *new_node)
+    linked_planes_t *new_node, int a)
 {
-    linked_planes_t **head = planes_list;
+    linked_planes_t *head = *planes_list;
 
-    init_new_node_sprite(new_node);
-    new_node->next = *head;
-    *head = new_node;
-    planes_list = head;
+    if (a)
+        init_new_node_sprite(new_node);
+    new_node->next = head;
+    *planes_list = new_node;
 }

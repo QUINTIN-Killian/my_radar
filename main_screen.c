@@ -9,15 +9,30 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void draw_planes(window_t *window, linked_planes_t **planes_list)
+static void destroy_main_screen(quad_tree_t *quad_tree)
+{
+    free(quad_tree->top_left->under_planes_list);
+    free(quad_tree->top_right->under_planes_list);
+    free(quad_tree->bottom_left->under_planes_list);
+    free(quad_tree->bottom_right->under_planes_list);
+    free(quad_tree->top_left);
+    free(quad_tree->top_right);
+    free(quad_tree->bottom_left);
+    free(quad_tree->bottom_right);
+}
+
+void draw_planes(window_t *window,
+    linked_planes_t **planes_list, quad_tree_t *quad_tree)
 {
     linked_planes_t *node = *planes_list;
 
     while (node != NULL) {
+        put_in_quad_tree(quad_tree, node);
         if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
-        >= node->plane_info->delay)
+        >= node->plane_info->delay) {
             sfRenderWindow_drawSprite(window->window_info,
             node->plane_info->plane_sprite, NULL);
+        }
         node = node->next;
     }
 }
@@ -68,16 +83,20 @@ void draw_fps(window_t *window)
 void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
-    window->fps->clock_fps = sfClock_create();
+    quad_tree_t quad_tree;
+
+    init_quad_tree(window, &quad_tree);
     while (sfRenderWindow_isOpen(window->window_info)) {
         sfRenderWindow_clear(window->window_info, sfBlack);
         sfRenderWindow_drawSprite(window->window_info,
         window->background->background_sprite, NULL);
-        draw_planes(window, planes_list);
+        draw_fps(window);
+        draw_planes(window, planes_list, &quad_tree);
         draw_towers(window, towers_list);
         draw_time(window);
         get_event(window);
-        draw_fps(window);
+        del_in_quad_tree(&quad_tree);
         sfRenderWindow_display(window->window_info);
     }
+    destroy_main_screen(&quad_tree);
 }

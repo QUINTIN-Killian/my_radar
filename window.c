@@ -12,6 +12,7 @@
 static void init_fps(window_t *window)
 {
     window->fps = malloc(sizeof(game_fps_t));
+    window->fps->clock_fps = sfClock_create();
     window->fps->fps = sfText_create();
     window->fps->fps_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setFont(window->fps->fps, window->fps->fps_font);

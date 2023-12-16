@@ -87,11 +87,19 @@ typedef struct linked_list_towers {
     struct linked_list_towers *next;
 } linked_towers_t;
 
-struct corner {
+typedef struct corner {
+    struct quad_tree *under_quad_tree;
     sfIntRect area;
-    int nb_circles;
+    int nb_planes;
     linked_planes_t **under_planes_list;
-};
+} corner_t;
+
+typedef struct quad_tree {
+    corner_t *top_left;
+    corner_t *top_right;
+    corner_t *bottom_left;
+    corner_t *bottom_right;
+} quad_tree_t;
 
 //file.c :
 char **get_buffer_file(char *filepath);
@@ -109,11 +117,12 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list);
 
 //action_on_planes.c :
+linked_planes_t *cpy_plane_node(linked_planes_t *node);
 int my_planes_list_len(linked_planes_t **planes_list);
 void disp_planes_list(linked_planes_t **planes_list);
 void del_in_planes_list(linked_planes_t **planes_list, int id_del);
 void add_in_planes_list(linked_planes_t **planes_list,
-    linked_planes_t *new_node);
+    linked_planes_t *new_node, int a);
 
 //action_on_towers.c :
 int my_towers_list_len(linked_towers_t **towers_list);
@@ -124,5 +133,11 @@ void add_in_towers_list(linked_towers_t **towers_list,
 
 //events.c :
 void get_event(window_t *window);
+
+//quad_tree.c :
+void del_in_quad_tree(quad_tree_t *quad_tree);
+void put_in_quad_tree(quad_tree_t *quad_tree,
+    linked_planes_t *plane);
+void init_quad_tree(window_t *window, quad_tree_t *quad_tree);
 
 #endif
