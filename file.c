@@ -89,6 +89,7 @@ char **get_buffer_file(char *filepath)
 
     if (fd == -1 || stat(filepath, &st) == -1) {
         close(fd);
+        write(2, "ERROR : can't open file or can't find file.", 43);
         return NULL;
     }
     word_array = create_word_array(&st, fd);

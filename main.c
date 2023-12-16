@@ -94,10 +94,8 @@ int main(int ac, char **av)
     if (help(ac, av))
         return 0;
     word_array = error_handling(ac, av);
-    if (word_array == NULL) {
-        destroy_word_array(word_array);
+    if (word_array == NULL)
         return 84;
-    }
     init_window(&window);
     add_elt(word_array, &window, &planes_list, &towers_list);
     destroy_word_array(word_array);
