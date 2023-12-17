@@ -29,7 +29,7 @@ void disp_towers_list(linked_towers_t **towers_list)
 
     my_putstr("TOWER :\n");
     if (tmp == NULL)
-        my_putstr("NULL\n");
+        my_putstr("NULL\n\n");
     while (tmp != NULL) {
         my_putstr("Id : ");
         my_put_nbr(tmp->id);

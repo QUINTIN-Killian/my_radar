@@ -68,7 +68,7 @@ void disp_planes_list(linked_planes_t **planes_list)
 
     my_putstr("PLANE :\n");
     if (tmp == NULL)
-        my_putstr("NULL\n");
+        my_putstr("NULL\n\n");
     while (tmp != NULL) {
         disp_planes_list_aux(tmp);
         tmp = tmp->next;
