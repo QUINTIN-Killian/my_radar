@@ -18,7 +18,7 @@ CFLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-audio	\
 all:	compile_lib compile
 
 compile_lib:
-	make re -C lib/my
+	make -C lib/my
 
 compile:	$(OBJ)
 	gcc -o $(BIN_NAME) $(OBJ) -L. -lmy $(CFLAGS)
