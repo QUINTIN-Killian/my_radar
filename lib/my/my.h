@@ -15,6 +15,12 @@
 #ifndef FUNCTIONS_H_
     #define FUNCTIONS_H_
 
+#define False 0
+#define True 1
+#define and &&
+#define or ||
+#define not !
+
 void my_putchar(char c);
 int my_isneg(int nb);
 int my_put_nbr(int nb);
