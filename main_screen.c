@@ -119,6 +119,18 @@ static void move_planes(window_t *window, linked_planes_t **planes_list)
     }
 }
 
+static void display_fonctions(window_t *window, linked_planes_t **planes_list,
+    linked_towers_t **towers_list, quad_tree_t *quad_tree)
+{
+    sfRenderWindow_clear(window->window_info, sfBlack);
+    sfRenderWindow_drawSprite(window->window_info,
+    window->background->background_sprite, NULL);
+    draw_fps(window);
+    draw_planes(window, planes_list, quad_tree);
+    draw_towers(window, towers_list);
+    draw_time(window);
+}
+
 void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
@@ -127,13 +139,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
     init_quad_tree(window, &quad_tree);
     while (sfRenderWindow_isOpen(window->window_info) &&
     my_planes_list_len(planes_list) > 0) {
-        sfRenderWindow_clear(window->window_info, sfBlack);
-        sfRenderWindow_drawSprite(window->window_info,
-        window->background->background_sprite, NULL);
-        draw_fps(window);
-        draw_planes(window, planes_list, &quad_tree);
-        draw_towers(window, towers_list);
-        draw_time(window);
+        display_fonctions(window, planes_list, towers_list, &quad_tree);
         move_planes(window, planes_list);
         del_in_quad_tree(&quad_tree);
         get_event(window);
