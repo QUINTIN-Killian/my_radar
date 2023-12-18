@@ -21,7 +21,7 @@ compile_lib:
 	make -C lib/my
 
 compile:	$(OBJ)
-	gcc -o $(BIN_NAME) $(OBJ) -L. -lmy $(CFLAGS)
+	gcc -o $(BIN_NAME) $(OBJ) -L. -lmy -lm $(CFLAGS)
 
 clean:
 	rm -f $(OBJ)
