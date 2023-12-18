@@ -49,6 +49,7 @@ static void destroy_main_aux(window_t *window, linked_planes_t **planes_list,
 static void destroy_main(window_t *window,
     linked_planes_t **planes_list, linked_towers_t **towers_list)
 {
+    sfClock_destroy(window->plane_clock);
     sfClock_destroy(window->timer->clock);
     sfText_destroy(window->timer->time);
     sfFont_destroy(window->timer->time_font);

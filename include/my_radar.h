@@ -50,6 +50,7 @@ typedef struct game_fps {
 typedef struct window {
     int id_planes;
     int id_towers;
+    sfClock *plane_clock;
     sfRenderWindow *window_info;
     sfVector2u window_size;
     sfVideoMode video_mode;
@@ -63,9 +64,9 @@ typedef struct window {
 typedef struct plane {
     int id;
     sfClock *clock;
-    sfVector2i departure_coords;
-    sfVector2i arrival_coords;
-    sfVector2i plane_pos;
+    sfVector2f departure_coords;
+    sfVector2f arrival_coords;
+    sfVector2f plane_pos;
     int speed;
     int delay;
     sfSprite *plane_sprite;
@@ -79,7 +80,7 @@ typedef struct linked_list_planes {
 
 typedef struct linked_list_towers {
     int id;
-    sfVector2i tower_pos;
+    sfVector2f tower_pos;
     int radius;
     sfSprite *tower_sprite;
     sfTexture *tower_texture;

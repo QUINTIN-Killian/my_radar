@@ -106,10 +106,10 @@ static void add_plane(window_t *window,
     plane->plane_info = malloc(sizeof(plane_t));
     plane->plane_info->id = window->id_planes;
     window->id_planes++;
-    plane->plane_info->departure_coords = (sfVector2i)
+    plane->plane_info->departure_coords = (sfVector2f)
     {convert_str_in_int(word_array[*ind + 1]),
     convert_str_in_int(word_array[*ind + 2])};
-    plane->plane_info->arrival_coords = (sfVector2i)
+    plane->plane_info->arrival_coords = (sfVector2f)
     {convert_str_in_int(word_array[*ind + 3]),
     convert_str_in_int(word_array[*ind + 4])};
     plane->plane_info->speed = convert_str_in_int(word_array[*ind + 5]);
@@ -125,8 +125,7 @@ static void add_tower(window_t *window,
 
     tower->id = window->id_towers;
     window->id_towers++;
-    tower->tower_pos = (sfVector2i)
-    {convert_str_in_int(word_array[*ind + 1]),
+    tower->tower_pos = (sfVector2f){convert_str_in_int(word_array[*ind + 1]),
     convert_str_in_int(word_array[*ind + 2])};
     tower->radius = convert_str_in_int(word_array[*ind + 3]);
     *ind += 4;

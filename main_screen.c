@@ -80,6 +80,45 @@ void draw_fps(window_t *window)
     sfClock_restart(window->fps->clock_fps);
 }
 
+static void teleport_plane(window_t *window, linked_planes_t *node)
+{
+    if (node->plane_info->plane_pos.x > window->window_size.x)
+        node->plane_info->plane_pos.x = 0;
+    if (node->plane_info->plane_pos.x < 0)
+        node->plane_info->plane_pos.x = window->window_size.x;
+    if (node->plane_info->plane_pos.y > window->window_size.y)
+        node->plane_info->plane_pos.y = 0;
+    if (node->plane_info->plane_pos.y < 0)
+        node->plane_info->plane_pos.y = window->window_size.y;
+}
+
+static void change_plane_pos(window_t *window, linked_planes_t *node)
+{
+    if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
+    >= node->plane_info->delay) {
+        node->plane_info->plane_pos.x += 5.0 +
+        (float)node->plane_info->speed;
+        teleport_plane(window, node);
+        sfSprite_setPosition(node->plane_info->plane_sprite,
+        node->plane_info->plane_pos);
+    }
+}
+
+static void move_planes(window_t *window, linked_planes_t **planes_list)
+{
+    linked_planes_t *node = *planes_list;
+    sfTime time = sfClock_getElapsedTime(window->plane_clock);
+    float seconds = time.microseconds / 1000000.0;
+
+    if (seconds > 0.1) {
+        sfClock_restart(window->plane_clock);
+        while (node != NULL) {
+            change_plane_pos(window, node);
+            node = node->next;
+        }
+    }
+}
+
 void main_screen(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list)
 {
@@ -95,8 +134,9 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         draw_planes(window, planes_list, &quad_tree);
         draw_towers(window, towers_list);
         draw_time(window);
-        get_event(window);
+        move_planes(window, planes_list);
         del_in_quad_tree(&quad_tree);
+        get_event(window);
         sfRenderWindow_display(window->window_info);
     }
     destroy_main_screen(&quad_tree);
