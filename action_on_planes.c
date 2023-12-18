@@ -17,7 +17,6 @@ linked_planes_t *cpy_plane_node(linked_planes_t *node)
     ans->plane_info = malloc(sizeof(plane_t));
     ans->plane_info->arrival_coords = node->plane_info->arrival_coords;
     ans->plane_info->departure_coords = node->plane_info->departure_coords;
-    ans->plane_info->clock = node->plane_info->clock;
     ans->plane_info->delay = node->plane_info->delay;
     ans->plane_info->id = node->plane_info->id;
     ans->plane_info->plane_pos = node->plane_info->plane_pos;
@@ -129,10 +128,13 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     sfTexture_createFromFile("pictures/plane3.png", NULL);
     sfSprite_setTexture(new_node->plane_info->plane_sprite,
     new_node->plane_info->plane_texture, sfFalse);
-    sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
-    {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
     sfSprite_setScale(new_node->plane_info->plane_sprite,
     (sfVector2f){0.1, 0.1});
+    sfSprite_setOrigin(new_node->plane_info->plane_sprite, (sfVector2f)
+    {sfTexture_getSize(new_node->plane_info->plane_texture).x / 2,
+    sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
+    sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
+    {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
     sfSprite_setRotation(new_node->plane_info->plane_sprite, 315.0);
 }
 

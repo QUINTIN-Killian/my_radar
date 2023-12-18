@@ -6,6 +6,7 @@
 ** my_hunter
 */
 
+#include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -63,7 +64,9 @@ typedef struct window {
 
 typedef struct plane {
     int id;
-    sfClock *clock;
+    float dir;
+    float hypothenuse;
+    float variation_rate;
     sfVector2f departure_coords;
     sfVector2f arrival_coords;
     sfVector2f plane_pos;
@@ -140,5 +143,12 @@ void del_in_quad_tree(quad_tree_t *quad_tree);
 void put_in_quad_tree(quad_tree_t *quad_tree,
     linked_planes_t *plane);
 void init_quad_tree(window_t *window, quad_tree_t *quad_tree);
+
+//planes_travel.c :
+void get_plane_travel_info(linked_planes_t *node);
+
+//end_simulation.c :
+int is_arrived(linked_planes_t *node);
+void end(window_t *window, linked_planes_t **planes_list);
 
 #endif

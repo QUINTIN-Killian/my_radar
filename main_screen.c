@@ -92,16 +92,25 @@ static void teleport_plane(window_t *window, linked_planes_t *node)
         node->plane_info->plane_pos.y = window->window_size.y;
 }
 
-static void change_plane_pos(window_t *window, linked_planes_t *node)
+static linked_planes_t *change_plane_pos(window_t *window,
+    linked_planes_t *node, linked_planes_t **planes_list)
 {
+    linked_planes_t *tmp = node->next;
+
     if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
-    >= node->plane_info->delay) {
-        node->plane_info->plane_pos.x += 5.0 +
+    >= node->plane_info->delay && node->plane_info->speed != 0) {
+        node->plane_info->plane_pos.x += node->plane_info->dir *
         (float)node->plane_info->speed;
+        node->plane_info->plane_pos.y += node->plane_info->variation_rate *
+        (node->plane_info->dir * (float)node->plane_info->speed);
         teleport_plane(window, node);
         sfSprite_setPosition(node->plane_info->plane_sprite,
         node->plane_info->plane_pos);
+        if (is_arrived(node)) {
+            del_in_planes_list(planes_list, node->plane_info->id);
+        }
     }
+    return tmp;
 }
 
 static void move_planes(window_t *window, linked_planes_t **planes_list)
@@ -110,11 +119,10 @@ static void move_planes(window_t *window, linked_planes_t **planes_list)
     sfTime time = sfClock_getElapsedTime(window->plane_clock);
     float seconds = time.microseconds / 1000000.0;
 
-    if (seconds > 0.1) {
+    if (seconds > 0.05) {
         sfClock_restart(window->plane_clock);
         while (node != NULL) {
-            change_plane_pos(window, node);
-            node = node->next;
+            node = change_plane_pos(window, node, planes_list);
         }
     }
 }
@@ -143,6 +151,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         move_planes(window, planes_list);
         del_in_quad_tree(&quad_tree);
         get_event(window);
+        end(window, planes_list);
         sfRenderWindow_display(window->window_info);
     }
     destroy_main_screen(&quad_tree);

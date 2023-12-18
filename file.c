@@ -115,6 +115,7 @@ static void add_plane(window_t *window,
     plane->plane_info->speed = convert_str_in_int(word_array[*ind + 5]);
     plane->plane_info->delay = convert_str_in_int(word_array[*ind + 6]);
     *ind += 7;
+    get_plane_travel_info(plane);
     add_in_planes_list(planes_list, plane, 1);
 }
 
