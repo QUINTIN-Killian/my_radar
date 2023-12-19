@@ -55,11 +55,11 @@ static void init_background(window_t *window)
     window->background = malloc(sizeof(background_t));
     window->background->background_sprite = sfSprite_create();
     window->background->background_texture =
-    sfTexture_createFromFile("pictures/world_map4.png", NULL);
+    sfTexture_createFromFile("pictures/world_map5.png", NULL);
     sfSprite_setTexture(window->background->background_sprite,
     window->background->background_texture, sfFalse);
     sfSprite_setScale(window->background->background_sprite,
-    (sfVector2f){0.95, 1});
+    (sfVector2f){1.5, 1.7});
 }
 
 void init_window(window_t *window)

@@ -125,17 +125,17 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     new_node->plane_info->plane_pos = new_node->plane_info->departure_coords;
     new_node->plane_info->plane_sprite = sfSprite_create();
     new_node->plane_info->plane_texture =
-    sfTexture_createFromFile("pictures/plane3.png", NULL);
+    sfTexture_createFromFile("pictures/plane4.png", NULL);
     sfSprite_setTexture(new_node->plane_info->plane_sprite,
     new_node->plane_info->plane_texture, sfFalse);
     sfSprite_setScale(new_node->plane_info->plane_sprite,
-    (sfVector2f){0.1, 0.1});
+    (sfVector2f){0.2, 0.2});
     sfSprite_setOrigin(new_node->plane_info->plane_sprite, (sfVector2f)
     {sfTexture_getSize(new_node->plane_info->plane_texture).x / 2,
     sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
     sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
     {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
-    sfSprite_setRotation(new_node->plane_info->plane_sprite, 135.0 -
+    sfSprite_setRotation(new_node->plane_info->plane_sprite, 90.0 -
     new_node->plane_info->rotation);
 }
 
