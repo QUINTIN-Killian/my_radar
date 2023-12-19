@@ -135,7 +135,8 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
     sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
     {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
-    sfSprite_setRotation(new_node->plane_info->plane_sprite, 315.0);
+    sfSprite_setRotation(new_node->plane_info->plane_sprite, 135.0 -
+    new_node->plane_info->rotation);
 }
 
 void add_in_planes_list(linked_planes_t **planes_list,

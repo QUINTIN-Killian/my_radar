@@ -64,9 +64,8 @@ typedef struct window {
 
 typedef struct plane {
     int id;
-    float dir;
+    float rotation;
     float hypothenuse;
-    float variation_rate;
     sfVector2f departure_coords;
     sfVector2f arrival_coords;
     sfVector2f plane_pos;

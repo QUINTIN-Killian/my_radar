@@ -17,10 +17,7 @@ void get_plane_travel_info(linked_planes_t *node)
     node->plane_info->departure_coords.y;
     float hyp1 = roundf(sqrtf(powf(x, 2.0) + powf(y, 2.0)));
 
-    if (x > 0)
-        node->plane_info->dir = 1;
-    else
-        node->plane_info->dir = -1;
-    node->plane_info->variation_rate = y / x;
     node->plane_info->hypothenuse = hyp1;
+    node->plane_info->rotation = atan2f(x, y) * 180 /
+    3.14159265358979323846264338;
 }
