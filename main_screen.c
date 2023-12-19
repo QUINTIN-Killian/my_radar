@@ -99,10 +99,12 @@ static linked_planes_t *change_plane_pos(window_t *window,
 
     if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
     >= node->plane_info->delay && node->plane_info->speed != 0) {
-        node->plane_info->plane_pos.x += node->plane_info->dir *
-        (float)node->plane_info->speed;
-        node->plane_info->plane_pos.y += node->plane_info->variation_rate *
-        (node->plane_info->dir * (float)node->plane_info->speed);
+        node->plane_info->plane_pos.x += ((node->plane_info->arrival_coords.x -
+        node->plane_info->departure_coords.x) / node->plane_info->hypothenuse)
+        * node->plane_info->speed;
+        node->plane_info->plane_pos.y += ((node->plane_info->arrival_coords.y -
+        node->plane_info->departure_coords.y) / node->plane_info->hypothenuse)
+        * node->plane_info->speed;
         teleport_plane(window, node);
         sfSprite_setPosition(node->plane_info->plane_sprite,
         node->plane_info->plane_pos);
@@ -130,7 +132,7 @@ static void move_planes(window_t *window, linked_planes_t **planes_list)
 static void display_fonctions(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list, quad_tree_t *quad_tree)
 {
-    sfRenderWindow_clear(window->window_info, sfBlack);
+    sfRenderWindow_clear(window->window_info, sfWhite);
     sfRenderWindow_drawSprite(window->window_info,
     window->background->background_sprite, NULL);
     draw_fps(window);
