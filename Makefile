@@ -22,9 +22,10 @@ compile_lib:
 
 compile:	$(OBJ)
 	gcc -o $(BIN_NAME) $(OBJ) -L. -lmy -lm $(CFLAGS)
+	mv $(OBJ) bin
 
 clean:
-	rm -f $(OBJ)
+	rm -f bin/*.o
 	make clean -C lib/my
 
 fclean:	clean
