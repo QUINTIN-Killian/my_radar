@@ -77,7 +77,7 @@ class Manager:
         tmp = deepcopy(self.__towers_)
         for i in range(self.__planes_nb[index]):
             a = randint(1, len(tmp)-1)
-            self.__planes.append(f"{tmp[a].replace('T', 'A')} {tmp[a-1].replace('T ', '')} {50} {randint(0, self.__max)}")
+            self.__planes.append(f"{tmp[a].replace('T', 'A')} {tmp[a-1].replace('T ', '')} {randint(1, 20)} {randint(0, self.__max)}")
 
     def __generate(self) -> None:
         for i in range(self.__data.number):
