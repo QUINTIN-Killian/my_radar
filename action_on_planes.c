@@ -130,8 +130,9 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     sfTexture_createFromFile("pictures/plane4.png", NULL);
     sfSprite_setTexture(new_node->plane_info->plane_sprite,
     new_node->plane_info->plane_texture, sfFalse);
-    sfSprite_setScale(new_node->plane_info->plane_sprite,
-    (sfVector2f){0.070, 0.075});
+    sfSprite_setScale(new_node->plane_info->plane_sprite, (sfVector2f){20.0 /
+    (float)sfTexture_getSize(new_node->plane_info->plane_texture).x, 20.0 /
+    (float)sfTexture_getSize(new_node->plane_info->plane_texture).y});
     sfSprite_setOrigin(new_node->plane_info->plane_sprite, (sfVector2f)
     {sfTexture_getSize(new_node->plane_info->plane_texture).x / 2,
     sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
