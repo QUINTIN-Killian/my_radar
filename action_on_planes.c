@@ -31,8 +31,7 @@ linked_planes_t *cpy_plane_node(linked_planes_t *node)
 
 int my_planes_list_len(linked_planes_t **planes_list)
 {
-    linked_planes_t **head = planes_list;
-    linked_planes_t *tmp = *head;
+    linked_planes_t *tmp = *planes_list;
     int ans = 0;
 
     while (tmp != NULL) {
@@ -134,8 +133,7 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     (float)sfTexture_getSize(new_node->plane_info->plane_texture).x, 20.0 /
     (float)sfTexture_getSize(new_node->plane_info->plane_texture).y});
     sfSprite_setOrigin(new_node->plane_info->plane_sprite, (sfVector2f)
-    {sfTexture_getSize(new_node->plane_info->plane_texture).x / 2,
-    sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
+    {142.5, 134});
     sfSprite_setPosition(new_node->plane_info->plane_sprite, (sfVector2f)
     {new_node->plane_info->plane_pos.x, new_node->plane_info->plane_pos.y});
     sfSprite_setRotation(new_node->plane_info->plane_sprite, 90.0 -

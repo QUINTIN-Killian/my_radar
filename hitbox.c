@@ -15,9 +15,7 @@ void init_hitbox(linked_planes_t *node)
     sfRectangleShape_setSize(node->plane_info->hitbox, (sfVector2f){20, 20});
     sfRectangleShape_setFillColor(node->plane_info->hitbox, sfTransparent);
     sfRectangleShape_setOutlineColor(node->plane_info->hitbox, sfGreen);
-    sfRectangleShape_setOrigin(node->plane_info->hitbox, (sfVector2f)
-    {sfTexture_getSize(node->plane_info->plane_texture).x / 2 * 0.070,
-    sfTexture_getSize(node->plane_info->plane_texture).y / 2 * 0.075});
+    sfRectangleShape_setOrigin(node->plane_info->hitbox, (sfVector2f){10, 10});
     sfRectangleShape_setOutlineThickness(node->plane_info->hitbox, 2);
     sfRectangleShape_setRotation(node->plane_info->hitbox, 90 -
     node->plane_info->rotation);
@@ -25,13 +23,9 @@ void init_hitbox(linked_planes_t *node)
 
 int is_intersecting_planes(linked_planes_t *node1, linked_planes_t *node2)
 {
-    float x;
-    float y;
+    float x = node1->plane_info->plane_pos.x - node2->plane_info->plane_pos.x;
+    float y = node1->plane_info->plane_pos.y - node2->plane_info->plane_pos.y;
 
-    if (node1 == NULL || node2 == NULL)
-        return -1;
-    x = node1->plane_info->plane_pos.x - node2->plane_info->plane_pos.x;
-    y = node1->plane_info->plane_pos.y - node2->plane_info->plane_pos.y;
     if (x < 0.0)
         x *= -1.0;
     if (y < 0.0)
@@ -41,42 +35,47 @@ int is_intersecting_planes(linked_planes_t *node1, linked_planes_t *node2)
     return 0;
 }
 
-int check_intersecting_planes(linked_planes_t **head,
-    linked_planes_t **head_under_list, linked_planes_t *node1,
-    linked_planes_t *node2)
+void search_correspondances(linked_planes_t **head,
+    linked_planes_t **under_head, linked_planes_t *node1, bool *del)
 {
-    if (is_intersecting_planes(node1, node2) == 1) {
-        del_in_planes_list(head, node1->plane_info->id);
-        del_in_planes_list(head, node2->plane_info->id);
-        if (*head_under_list == NULL || (*head_under_list)->next == NULL) {
-            node1 = *head_under_list;
-            node2 = node1->next;
-            return check_intersecting_planes(head, head_under_list,
-            node1, node2);
+    linked_planes_t *node2 = node1->next;
+    linked_planes_t *tmp;
+
+    while (node2 != NULL) {
+        if (is_intersecting_planes(node1, node2)) {
+            *del = True;
+            tmp = node2;
+            node2 = node2->next;
+            del_in_planes_list(head, tmp->plane_info->id);
+            del_in_planes_list(under_head, tmp->plane_info->id);
         } else
-            return 0;
-    } else if (is_intersecting_planes(node1, node2) == 0) {
-        node2 = node2->next;
-        return check_intersecting_planes(head, head_under_list, node1, node2);
-    } else
-        return 0;
+            node2 = node2->next;
+    }
 }
 
-void call_checking_collision(linked_planes_t **head,
-    linked_planes_t **head_under_list)
+void collision(linked_planes_t **head, linked_planes_t **under_head)
 {
-    linked_planes_t *node1 = *head_under_list;
-    linked_planes_t *node2 = NULL;
+    linked_planes_t *node1 = *under_head;
+    linked_planes_t *tmp = NULL;
+    bool del = False;
 
-    if (node1 != NULL)
-        node2 = node1->next;
-    check_intersecting_planes(head, head_under_list, node1, node2);
+    while (node1 != NULL) {
+        search_correspondances(head, under_head, node1, &del);
+        if (del) {
+            del = False;
+            tmp = node1;
+            node1 = node1->next;
+            del_in_planes_list(head, tmp->plane_info->id);
+            del_in_planes_list(under_head, tmp->plane_info->id);
+        } else
+            node1 = node1->next;
+    }
 }
 
-void del_collision_planes(linked_planes_t **head, quad_tree_t *quad_tree)
+void explore_quad_tree(linked_planes_t **head, quad_tree_t *quad_tree)
 {
-    call_checking_collision(head, quad_tree->top_left->under_planes_list);
-    call_checking_collision(head, quad_tree->top_right->under_planes_list);
-    call_checking_collision(head, quad_tree->bottom_left->under_planes_list);
-    call_checking_collision(head, quad_tree->bottom_right->under_planes_list);
+    collision(head, quad_tree->top_left->under_planes_list);
+    collision(head, quad_tree->top_right->under_planes_list);
+    collision(head, quad_tree->bottom_left->under_planes_list);
+    collision(head, quad_tree->bottom_right->under_planes_list);
 }

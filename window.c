@@ -18,12 +18,12 @@ static void init_fps(window_t *window)
     sfText_setFont(window->fps->fps, window->fps->fps_font);
     sfText_setString(window->fps->fps, "FPS : ");
     sfText_setColor(window->fps->fps, sfBlack);
-    sfText_setPosition(window->fps->fps, (sfVector2f){0, 70});
+    sfText_setPosition(window->fps->fps, (sfVector2f){0, 50});
     window->fps->fps_value = sfText_create();
     window->fps->fps_value_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setFont(window->fps->fps_value, window->fps->fps_value_font);
     sfText_setColor(window->fps->fps_value, sfBlack);
-    sfText_setPosition(window->fps->fps_value, (sfVector2f){70, 70});
+    sfText_setPosition(window->fps->fps_value, (sfVector2f){50, 50});
 }
 
 static void init_timer(window_t *window)
@@ -80,4 +80,5 @@ void init_window(window_t *window)
     window->window_info = sfRenderWindow_create(window->video_mode,
     window->window_name, sfClose, NULL);
     window->window_size = sfRenderWindow_getSize(window->window_info);
+    sfRenderWindow_setFramerateLimit(window->window_info, 60);
 }
