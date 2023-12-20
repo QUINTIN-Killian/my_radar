@@ -70,6 +70,8 @@ void init_window(window_t *window)
     init_fps(window);
     window->id_planes = 0;
     window->id_towers = 0;
+    window->show_hitboxes = False;
+    window->show_entities = True;
     window->plane_clock = sfClock_create();
     window->video_mode.height = 1080;
     window->video_mode.width = 1920;

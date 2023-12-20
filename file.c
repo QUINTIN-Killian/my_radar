@@ -117,6 +117,7 @@ static void add_plane(window_t *window,
     *ind += 7;
     get_plane_travel_info(plane);
     add_in_planes_list(planes_list, plane, 1);
+    init_hitbox(plane);
 }
 
 static void add_tower(window_t *window,

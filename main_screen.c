@@ -29,9 +29,15 @@ void draw_planes(window_t *window,
     while (node != NULL) {
         put_in_quad_tree(quad_tree, node);
         if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
-        >= node->plane_info->delay) {
+        >= node->plane_info->delay && window->show_entities)
             sfRenderWindow_drawSprite(window->window_info,
             node->plane_info->plane_sprite, NULL);
+        if ((int)sfTime_asSeconds(sfClock_getElapsedTime(window->timer->clock))
+        >= node->plane_info->delay && window->show_hitboxes) {
+            sfRectangleShape_setPosition(node->plane_info->hitbox,
+            node->plane_info->plane_pos);
+            sfRenderWindow_drawRectangleShape(window->window_info,
+            node->plane_info->hitbox, NULL);
         }
         node = node->next;
     }
@@ -42,9 +48,12 @@ void draw_towers(window_t *window, linked_towers_t **towers_list)
     linked_towers_t *node = *towers_list;
 
     while (node != NULL) {
-        sfRenderWindow_drawSprite(window->window_info,
-        node->tower_sprite, NULL);
-        sfRenderWindow_drawCircleShape(window->window_info, node->range, NULL);
+        if (window->show_entities)
+            sfRenderWindow_drawSprite(window->window_info,
+            node->tower_sprite, NULL);
+        if (window->show_hitboxes)
+            sfRenderWindow_drawCircleShape(window->window_info, node->range,
+            NULL);
         node = node->next;
     }
 }
@@ -136,8 +145,8 @@ static void display_fonctions(window_t *window, linked_planes_t **planes_list,
     sfRenderWindow_drawSprite(window->window_info,
     window->background->background_sprite, NULL);
     draw_fps(window);
-    draw_planes(window, planes_list, quad_tree);
     draw_towers(window, towers_list);
+    draw_planes(window, planes_list, quad_tree);
     draw_time(window);
 }
 

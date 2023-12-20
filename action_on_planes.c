@@ -25,6 +25,7 @@ linked_planes_t *cpy_plane_node(linked_planes_t *node)
     ans->plane_info->plane_sprite =
     sfSprite_copy(node->plane_info->plane_sprite);
     ans->plane_info->speed = node->plane_info->speed;
+    ans->plane_info->hitbox = sfRectangleShape_copy(node->plane_info->hitbox);
     return ans;
 }
 
@@ -78,6 +79,7 @@ static void free_node(linked_planes_t *node)
 {
     sfSprite_destroy(node->plane_info->plane_sprite);
     sfTexture_destroy(node->plane_info->plane_texture);
+    sfRectangleShape_destroy(node->plane_info->hitbox);
     free(node->plane_info);
     free(node);
 }
@@ -140,11 +142,11 @@ static void init_new_node_sprite(linked_planes_t *new_node)
 }
 
 void add_in_planes_list(linked_planes_t **planes_list,
-    linked_planes_t *new_node, int a)
+    linked_planes_t *new_node, int is_new)
 {
     linked_planes_t *head = *planes_list;
 
-    if (a)
+    if (is_new)
         init_new_node_sprite(new_node);
     new_node->next = head;
     *planes_list = new_node;

@@ -23,6 +23,11 @@
 #ifndef MY_HUNTER_H_
     #define MY_HUNTER_H_
 
+typedef enum boolean {
+    False,
+    True
+} bool;
+
 typedef struct background {
     sfTexture *background_texture;
     sfSprite *background_sprite;
@@ -51,6 +56,8 @@ typedef struct game_fps {
 typedef struct window {
     int id_planes;
     int id_towers;
+    bool show_hitboxes;
+    bool show_entities;
     sfClock *plane_clock;
     sfRenderWindow *window_info;
     sfVector2u window_size;
@@ -71,6 +78,7 @@ typedef struct plane {
     sfVector2f plane_pos;
     int speed;
     int delay;
+    sfRectangleShape *hitbox;
     sfSprite *plane_sprite;
     sfTexture *plane_texture;
 } plane_t;
@@ -125,7 +133,7 @@ int my_planes_list_len(linked_planes_t **planes_list);
 void disp_planes_list(linked_planes_t **planes_list);
 void del_in_planes_list(linked_planes_t **planes_list, int id_del);
 void add_in_planes_list(linked_planes_t **planes_list,
-    linked_planes_t *new_node, int a);
+    linked_planes_t *new_node, int is_new);
 
 //action_on_towers.c :
 int my_towers_list_len(linked_towers_t **towers_list);
@@ -149,5 +157,8 @@ void get_plane_travel_info(linked_planes_t *node);
 //end_simulation.c :
 int is_arrived(linked_planes_t *node);
 void end(window_t *window, linked_planes_t **planes_list);
+
+//rect.c :
+void init_hitbox(linked_planes_t *node);
 
 #endif

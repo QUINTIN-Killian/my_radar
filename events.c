@@ -9,6 +9,30 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
+void display(sfEvent *event, window_t *window)
+{
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyL) &&
+    window->show_hitboxes) {
+        window->show_hitboxes = False;
+        return;
+    }
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyL) &&
+    !window->show_hitboxes) {
+        window->show_hitboxes = True;
+        return;
+    }
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyS) &&
+    window->show_entities) {
+        window->show_entities = False;
+        return;
+    }
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyS) &&
+    !window->show_entities) {
+        window->show_entities = True;
+        return;
+    }
+}
+
 void music_play(sfEvent *event, window_t *window)
 {
     if (event->type == sfEvtKeyPressed &&
@@ -62,5 +86,6 @@ void get_event(window_t *window)
         close_window(&event, window);
         music_play(&event, window);
         volume(&event, window);
+        display(&event, window);
     }
 }
