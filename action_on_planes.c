@@ -131,7 +131,7 @@ static void init_new_node_sprite(linked_planes_t *new_node)
     sfSprite_setTexture(new_node->plane_info->plane_sprite,
     new_node->plane_info->plane_texture, sfFalse);
     sfSprite_setScale(new_node->plane_info->plane_sprite,
-    (sfVector2f){0.2, 0.2});
+    (sfVector2f){0.070, 0.075});
     sfSprite_setOrigin(new_node->plane_info->plane_sprite, (sfVector2f)
     {sfTexture_getSize(new_node->plane_info->plane_texture).x / 2,
     sfTexture_getSize(new_node->plane_info->plane_texture).y / 2});
