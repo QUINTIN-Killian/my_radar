@@ -33,7 +33,7 @@ def is_number(str):
     return True
 
 def generator(infos):
-    file = open(f"{infos.file_name}.rdr", "w")
+    file = open(f"scripts/{infos.file_name}.rdr", "w")
     for i in range(infos.nb_planes):
         file.write(f"A  {randint(0, 1920)} {randint(0, 1080)}  {randint(0, 1920)} {randint(0, 1080)}  {randint(1, 20)}  {randint(0, 20)}\n")
     for i in range(infos.nb_towers):
