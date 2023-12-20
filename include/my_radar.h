@@ -158,7 +158,8 @@ void get_plane_travel_info(linked_planes_t *node);
 int is_arrived(linked_planes_t *node);
 void end(window_t *window, linked_planes_t **planes_list);
 
-//rect.c :
+//hitbox.c :
 void init_hitbox(linked_planes_t *node);
+void del_collision_planes(linked_planes_t **head, quad_tree_t *quad_tree);
 
 #endif

@@ -160,6 +160,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
     my_planes_list_len(planes_list) > 0) {
         display_fonctions(window, planes_list, towers_list, &quad_tree);
         move_planes(window, planes_list);
+        del_collision_planes(planes_list, &quad_tree);
         del_in_quad_tree(&quad_tree);
         get_event(window);
         end(window, planes_list);
