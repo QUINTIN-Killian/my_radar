@@ -103,6 +103,7 @@ static void add_plane(window_t *window,
 {
     linked_planes_t *plane = malloc(sizeof(linked_planes_t));
 
+    window->total_planes++;
     plane->plane_info = malloc(sizeof(plane_t));
     plane->plane_info->id = window->id_planes;
     window->id_planes++;

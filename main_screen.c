@@ -50,6 +50,7 @@ static linked_planes_t *change_plane_pos(window_t *window,
         sfSprite_setPosition(node->plane_info->plane_sprite,
         node->plane_info->plane_pos);
         if (is_arrived(node)) {
+            window->arrived_planes++;
             del_in_planes_list(planes_list, node->plane_info->id);
         }
     }
@@ -81,7 +82,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         sfRenderWindow_clear(window->window_info, sfWhite);
         display_fonctions(window, planes_list, towers_list, &quad_tree);
         move_planes(window, planes_list);
-        explore_quad_tree(planes_list, &quad_tree);
+        explore_quad_tree(planes_list, towers_list, &quad_tree);
         del_in_quad_tree(&quad_tree);
         get_event(window);
         end(window, planes_list);

@@ -7,6 +7,20 @@
 */
 /*
 NOTES :
+    my_putstr("STATS\nTotal planes : ");
+    my_put_nbr(window->total_planes);
+    my_putstr("\nArrived planes : ");
+    my_put_nbr(window->arrived_planes);
+    my_putstr("\nPercentage of arrived planes : ");
+    my_put_nbr(100 * window->arrived_planes / window->total_planes);
+    my_putchar('%');
+    my_putstr("\nDestroyed planes : ");
+    my_put_nbr(window->total_planes - window->arrived_planes);
+    my_putstr("\nPercentage of destroyed planes : ");
+    my_put_nbr(100 * (window->total_planes - window->arrived_planes) /
+    window->total_planes);
+    my_putchar('%');
+OBJECTIFS :
     - détecter si des avions ne se croisent pas dans la range d'une tour
     de contrôle (si c'est le cas, ne pas les détruire)
     - faire un quad tree dynamique

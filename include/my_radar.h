@@ -58,6 +58,8 @@ typedef struct window {
     int id_towers;
     bool show_hitboxes;
     bool show_entities;
+    int total_planes;
+    int arrived_planes;
     sfClock *plane_clock;
     sfRenderWindow *window_info;
     sfVector2u window_size;
@@ -160,7 +162,8 @@ void end(window_t *window, linked_planes_t **planes_list);
 
 //hitbox.c :
 void init_hitbox(linked_planes_t *node);
-void explore_quad_tree(linked_planes_t **head, quad_tree_t *quad_tree);
+void explore_quad_tree(linked_planes_t **planes_list,
+    linked_towers_t **towers_list, quad_tree_t *quad_tree);
 
 //display.c :
 void display_fonctions(window_t *window, linked_planes_t **planes_list,
