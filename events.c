@@ -74,8 +74,19 @@ void volume(sfEvent *event, window_t *window)
 
 static void close_window(sfEvent *event, window_t *window)
 {
-    if (event->type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape))
+    sfVector2i mouse_pos =
+    sfMouse_getPositionRenderWindow(window->window_info);
+
+    if (event->type == sfEvtClosed) {
         sfRenderWindow_close(window->window_info);
+        return;
+    }
+    if (window->pause && event->type == sfEvtMouseButtonPressed &&
+    mouse_pos.x >= 960 - 125 && mouse_pos.x <= 960 + 125 &&
+    mouse_pos.y >= 670 - 50 && mouse_pos.y <= 670 + 50) {
+        sfRenderWindow_close(window->window_info);
+        return;
+    }
 }
 
 void get_event(window_t *window)
@@ -87,5 +98,6 @@ void get_event(window_t *window)
         music_play(&event, window);
         volume(&event, window);
         display(&event, window);
+        is_paused(&event, window);
     }
 }

@@ -72,6 +72,7 @@ void init_window(window_t *window)
     window->id_towers = 0;
     window->show_hitboxes = False;
     window->show_entities = True;
+    window->pause = False;
     window->total_planes = 0;
     window->arrived_planes = 0;
     window->plane_clock = sfClock_create();
