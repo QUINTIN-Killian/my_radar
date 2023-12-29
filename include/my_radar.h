@@ -58,6 +58,7 @@ typedef struct window {
     int id_towers;
     bool show_hitboxes;
     bool show_entities;
+    bool start;
     bool pause;
     int total_planes;
     int arrived_planes;
@@ -114,6 +115,18 @@ typedef struct quad_tree {
     corner_t *bottom_left;
     corner_t *bottom_right;
 } quad_tree_t;
+
+typedef struct start_menu {
+    sfRectangleShape *start_background;
+    sfText *start_text;
+    sfFont *start_text_font;
+    sfRectangleShape *launch_game_button;
+    sfText *launch_game;
+    sfFont *launch_game_font;
+    sfRectangleShape *leave_game_button;
+    sfText *leave_game;
+    sfFont *leave_game_font;
+} start_menu_t;
 
 typedef struct pause_menu {
     sfRectangleShape *pause_background;
@@ -186,5 +199,13 @@ void display_fonctions(window_t *window, linked_planes_t **planes_list,
 void is_paused(sfEvent *event, window_t *window);
 void pause_game(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list, quad_tree_t *quad_tree);
+
+//start.c :
+void is_started(sfEvent *event, window_t *window);
+void start_game(window_t *window, linked_planes_t **planes_list,
+    linked_towers_t **towers_list);
+
+//start_events.c :
+void get_start_event(window_t *window);
 
 #endif

@@ -62,6 +62,19 @@ static void init_background(window_t *window)
     (sfVector2f){1.5, 1.7});
 }
 
+static void init_window_aux(window_t *window)
+{
+    window->plane_clock = sfClock_create();
+    window->video_mode.height = 1080;
+    window->video_mode.width = 1920;
+    window->video_mode.bitsPerPixel = 64;
+    window->window_name = "my_radar (created by Killian QUINTIN)";
+    window->window_info = sfRenderWindow_create(window->video_mode,
+    window->window_name, sfClose, NULL);
+    window->window_size = sfRenderWindow_getSize(window->window_info);
+    sfRenderWindow_setFramerateLimit(window->window_info, 60);
+}
+
 void init_window(window_t *window)
 {
     init_main_music(window);
@@ -72,16 +85,9 @@ void init_window(window_t *window)
     window->id_towers = 0;
     window->show_hitboxes = False;
     window->show_entities = True;
+    window->start = False;
     window->pause = False;
     window->total_planes = 0;
     window->arrived_planes = 0;
-    window->plane_clock = sfClock_create();
-    window->video_mode.height = 1080;
-    window->video_mode.width = 1920;
-    window->video_mode.bitsPerPixel = 64;
-    window->window_name = "my_radar (created by Killian QUINTIN)";
-    window->window_info = sfRenderWindow_create(window->video_mode,
-    window->window_name, sfClose, NULL);
-    window->window_size = sfRenderWindow_getSize(window->window_info);
-    sfRenderWindow_setFramerateLimit(window->window_info, 60);
+    init_window_aux(window);
 }

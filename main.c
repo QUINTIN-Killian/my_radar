@@ -21,9 +21,12 @@ NOTES :
     window->total_planes);
     my_putchar('%');
 OBJECTIFS :
+    - compléter le -h
+    - fix le fait que le temps continue de
+    tourner alors que le jeu est en pause
+    - faire un menu de fin et afficher les statistiques
+    des avions (pourcentage d'avions détruits...)
     - faire un quad tree dynamique
-    - récupérer les statistiques des avions (pourcentage d'avions détruits...)
-    - faire un menu de lancement de la simulation et un menu de fin
 */
 
 #include "include/my.h"
@@ -88,6 +91,8 @@ static void print_help(void)
     my_putstr("USER INTERACTIONS\n");
     my_putstr(" 'L' key enable/disable hitboxes and areas.\n");
     my_putstr(" 'S' key enable/disable sprites.\n");
+    my_putstr(" 'Escape' key in start menu leaves the game.\n");
+    my_putstr(" 'Escape' key during simulation opens the pause menu.\n");
 }
 
 static int help(int ac, char **av)
@@ -114,7 +119,7 @@ int main(int ac, char **av)
     init_window(&window);
     add_elt(word_array, &window, &planes_list, &towers_list);
     destroy_word_array(word_array);
-    main_screen(&window, &planes_list, &towers_list);
+    start_game(&window, &planes_list, &towers_list);
     destroy_main(&window, &planes_list, &towers_list);
     return 0;
 }

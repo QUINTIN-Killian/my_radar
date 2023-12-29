@@ -77,6 +77,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
     quad_tree_t quad_tree;
 
     init_quad_tree(window, &quad_tree);
+    sfClock_restart(window->timer->clock);
     while (sfRenderWindow_isOpen(window->window_info) &&
     my_planes_list_len(planes_list) > 0) {
         if (window->pause)
