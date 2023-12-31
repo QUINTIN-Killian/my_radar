@@ -9,14 +9,13 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void init_background_pause(pause_menu_t *pause)
+void init_background_pause(window_t *window, pause_menu_t *pause)
 {
     pause->pause_text = sfText_create();
-    pause->pause_text_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(pause->pause_text, (sfVector2f){867, 250});
     sfText_setFillColor(pause->pause_text, sfWhite);
     sfText_setOutlineColor(pause->pause_text, sfBlack);
-    sfText_setFont(pause->pause_text, pause->pause_text_font);
+    sfText_setFont(pause->pause_text, window->main_font);
     sfText_setString(pause->pause_text, "PAUSE");
     sfText_setOutlineThickness(pause->pause_text, 2.0);
     sfText_setCharacterSize(pause->pause_text, 100);
@@ -31,7 +30,7 @@ void init_background_pause(pause_menu_t *pause)
     sfRectangleShape_setFillColor(pause->pause_background, sfWhite);
 }
 
-void init_continue_pause(pause_menu_t *pause)
+void init_continue_pause(window_t *window, pause_menu_t *pause)
 {
     pause->continue_game_button = sfRectangleShape_create();
     sfRectangleShape_setSize(pause->continue_game_button,
@@ -44,17 +43,16 @@ void init_continue_pause(pause_menu_t *pause)
     sfRectangleShape_setOutlineColor(pause->continue_game_button, sfBlack);
     sfRectangleShape_setFillColor(pause->continue_game_button, sfWhite);
     pause->continue_game = sfText_create();
-    pause->continue_game_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(pause->continue_game, (sfVector2f){920, 533});
     sfText_setFillColor(pause->continue_game, sfWhite);
     sfText_setOutlineColor(pause->continue_game, sfBlack);
-    sfText_setFont(pause->continue_game, pause->continue_game_font);
+    sfText_setFont(pause->continue_game, window->main_font);
     sfText_setString(pause->continue_game, "CONTINUE");
     sfText_setOutlineThickness(pause->continue_game, 2.0);
     sfText_setCharacterSize(pause->continue_game, 30);
 }
 
-void init_leave_pause(pause_menu_t *pause)
+void init_leave_pause(window_t *window, pause_menu_t *pause)
 {
     pause->leave_game_button = sfRectangleShape_create();
     sfRectangleShape_setSize(pause->leave_game_button, (sfVector2f){250, 100});
@@ -66,21 +64,20 @@ void init_leave_pause(pause_menu_t *pause)
     sfRectangleShape_setOutlineColor(pause->leave_game_button, sfBlack);
     sfRectangleShape_setFillColor(pause->leave_game_button, sfWhite);
     pause->leave_game = sfText_create();
-    pause->leave_game_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(pause->leave_game, (sfVector2f){934, 650});
     sfText_setFillColor(pause->leave_game, sfWhite);
     sfText_setOutlineColor(pause->leave_game, sfBlack);
-    sfText_setFont(pause->leave_game, pause->leave_game_font);
+    sfText_setFont(pause->leave_game, window->main_font);
     sfText_setString(pause->leave_game, "LEAVE");
     sfText_setOutlineThickness(pause->leave_game, 2.0);
     sfText_setCharacterSize(pause->leave_game, 30);
 }
 
-static void init_pause(pause_menu_t *pause)
+static void init_pause(window_t *window, pause_menu_t *pause)
 {
-    init_background_pause(pause);
-    init_continue_pause(pause);
-    init_leave_pause(pause);
+    init_background_pause(window, pause);
+    init_continue_pause(window, pause);
+    init_leave_pause(window, pause);
 }
 
 static void destroy_pause(pause_menu_t *pause)
@@ -89,11 +86,8 @@ static void destroy_pause(pause_menu_t *pause)
     sfRectangleShape_destroy(pause->continue_game_button);
     sfRectangleShape_destroy(pause->leave_game_button);
     sfText_destroy(pause->pause_text);
-    sfFont_destroy(pause->pause_text_font);
     sfText_destroy(pause->continue_game);
-    sfFont_destroy(pause->continue_game_font);
     sfText_destroy(pause->leave_game);
-    sfFont_destroy(pause->leave_game_font);
 }
 
 void is_paused(sfEvent *event, window_t *window)
@@ -156,7 +150,7 @@ void pause_game(window_t *window, linked_planes_t **planes_list,
 {
     pause_menu_t pause;
 
-    init_pause(&pause);
+    init_pause(window, &pause);
     while (sfRenderWindow_isOpen(window->window_info) && window->pause) {
         sfRenderWindow_clear(window->window_info, sfBlack);
         display_fonctions(window, planes_list, towers_list, quad_tree);

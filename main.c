@@ -22,10 +22,13 @@ NOTES :
     my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - fix le fait que le temps continue de
-    tourner alors que le jeu est en pause
+    - fix les font
+    - aficher quad tree
+    - fix collisions avions hors quad tree mais qui se touchent
     - faire un menu de fin et afficher les statistiques
     des avions (pourcentage d'avions détruits...)
+    - fix le fait que le temps continue de
+    tourner alors que le jeu est en pause
     - faire un quad tree dynamique
 */
 
@@ -64,18 +67,15 @@ static void destroy_main_aux(window_t *window, linked_planes_t **planes_list,
 static void destroy_main(window_t *window,
     linked_planes_t **planes_list, linked_towers_t **towers_list)
 {
+    sfFont_destroy(window->main_font);
     sfClock_destroy(window->plane_clock);
     sfClock_destroy(window->timer->clock);
     sfText_destroy(window->timer->time);
-    sfFont_destroy(window->timer->time_font);
     sfText_destroy(window->timer->time_value);
-    sfFont_destroy(window->timer->time_value_font);
     free(window->timer);
     sfClock_destroy(window->fps->clock_fps);
     sfText_destroy(window->fps->fps);
-    sfFont_destroy(window->fps->fps_font);
     sfText_destroy(window->fps->fps_value);
-    sfFont_destroy(window->fps->fps_value_font);
     free(window->fps);
     destroy_main_aux(window, planes_list, towers_list);
 }

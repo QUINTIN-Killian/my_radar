@@ -9,14 +9,13 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void init_background_start(start_menu_t *start)
+void init_background_start(window_t *window, start_menu_t *start)
 {
     start->start_text = sfText_create();
-    start->start_text_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(start->start_text, (sfVector2f){822, 250});
     sfText_setFillColor(start->start_text, sfWhite);
     sfText_setOutlineColor(start->start_text, sfBlack);
-    sfText_setFont(start->start_text, start->start_text_font);
+    sfText_setFont(start->start_text, window->main_font);
     sfText_setString(start->start_text, "my_radar");
     sfText_setOutlineThickness(start->start_text, 2.0);
     sfText_setCharacterSize(start->start_text, 90);
@@ -31,7 +30,7 @@ void init_background_start(start_menu_t *start)
     sfRectangleShape_setFillColor(start->start_background, sfWhite);
 }
 
-void init_launch_start(start_menu_t *start)
+void init_launch_start(window_t *window, start_menu_t *start)
 {
     start->launch_game_button = sfRectangleShape_create();
     sfRectangleShape_setSize(start->launch_game_button,
@@ -44,17 +43,16 @@ void init_launch_start(start_menu_t *start)
     sfRectangleShape_setOutlineColor(start->launch_game_button, sfBlack);
     sfRectangleShape_setFillColor(start->launch_game_button, sfWhite);
     start->launch_game = sfText_create();
-    start->launch_game_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(start->launch_game, (sfVector2f){877, 533});
     sfText_setFillColor(start->launch_game, sfWhite);
     sfText_setOutlineColor(start->launch_game, sfBlack);
-    sfText_setFont(start->launch_game, start->launch_game_font);
+    sfText_setFont(start->launch_game, window->main_font);
     sfText_setString(start->launch_game, "START SIMULATION");
     sfText_setOutlineThickness(start->launch_game, 2.0);
     sfText_setCharacterSize(start->launch_game, 30);
 }
 
-void init_leave_start(start_menu_t *start)
+void init_leave_start(window_t *window, start_menu_t *start)
 {
     start->leave_game_button = sfRectangleShape_create();
     sfRectangleShape_setSize(start->leave_game_button, (sfVector2f){250, 100});
@@ -66,21 +64,20 @@ void init_leave_start(start_menu_t *start)
     sfRectangleShape_setOutlineColor(start->leave_game_button, sfBlack);
     sfRectangleShape_setFillColor(start->leave_game_button, sfWhite);
     start->leave_game = sfText_create();
-    start->leave_game_font = sfFont_createFromFile("font/Airport.otf");
     sfText_setPosition(start->leave_game, (sfVector2f){934, 650});
     sfText_setFillColor(start->leave_game, sfWhite);
     sfText_setOutlineColor(start->leave_game, sfBlack);
-    sfText_setFont(start->leave_game, start->leave_game_font);
+    sfText_setFont(start->leave_game, window->main_font);
     sfText_setString(start->leave_game, "LEAVE");
     sfText_setOutlineThickness(start->leave_game, 2.0);
     sfText_setCharacterSize(start->leave_game, 30);
 }
 
-static void init_start(start_menu_t *start)
+static void init_start(window_t *window, start_menu_t *start)
 {
-    init_background_start(start);
-    init_launch_start(start);
-    init_leave_start(start);
+    init_background_start(window, start);
+    init_launch_start(window, start);
+    init_leave_start(window, start);
 }
 
 static void destroy_start(start_menu_t *start)
@@ -89,11 +86,8 @@ static void destroy_start(start_menu_t *start)
     sfRectangleShape_destroy(start->launch_game_button);
     sfRectangleShape_destroy(start->leave_game_button);
     sfText_destroy(start->start_text);
-    sfFont_destroy(start->start_text_font);
     sfText_destroy(start->launch_game);
-    sfFont_destroy(start->launch_game_font);
     sfText_destroy(start->leave_game);
-    sfFont_destroy(start->leave_game_font);
 }
 
 void is_started(sfEvent *event, window_t *window)
@@ -146,7 +140,7 @@ void start_game(window_t *window, linked_planes_t **planes_list,
 {
     start_menu_t start;
 
-    init_start(&start);
+    init_start(window, &start);
     while (sfRenderWindow_isOpen(window->window_info) && !window->start) {
         sfRenderWindow_clear(window->window_info, sfBlack);
         display_start(window, &start);

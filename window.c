@@ -14,14 +14,12 @@ static void init_fps(window_t *window)
     window->fps = malloc(sizeof(game_fps_t));
     window->fps->clock_fps = sfClock_create();
     window->fps->fps = sfText_create();
-    window->fps->fps_font = sfFont_createFromFile("font/Airport.otf");
-    sfText_setFont(window->fps->fps, window->fps->fps_font);
+    sfText_setFont(window->fps->fps, window->main_font);
     sfText_setString(window->fps->fps, "FPS : ");
     sfText_setColor(window->fps->fps, sfBlack);
     sfText_setPosition(window->fps->fps, (sfVector2f){0, 50});
     window->fps->fps_value = sfText_create();
-    window->fps->fps_value_font = sfFont_createFromFile("font/Airport.otf");
-    sfText_setFont(window->fps->fps_value, window->fps->fps_value_font);
+    sfText_setFont(window->fps->fps_value, window->main_font);
     sfText_setColor(window->fps->fps_value, sfBlack);
     sfText_setPosition(window->fps->fps_value, (sfVector2f){50, 50});
 }
@@ -31,13 +29,11 @@ static void init_timer(window_t *window)
     window->timer = malloc(sizeof(main_timer_t));
     window->timer->clock = sfClock_create();
     window->timer->time = sfText_create();
-    window->timer->time_font = sfFont_createFromFile("font/Airport.otf");
-    sfText_setFont(window->timer->time, window->timer->time_font);
+    sfText_setFont(window->timer->time, window->main_font);
     sfText_setString(window->timer->time, "TIME : ");
     sfText_setColor(window->timer->time, sfBlack);
     window->timer->time_value = sfText_create();
-    window->timer->time_value_font = sfFont_createFromFile("font/Airport.otf");
-    sfText_setFont(window->timer->time_value, window->timer->time_value_font);
+    sfText_setFont(window->timer->time_value, window->main_font);
     sfText_setPosition(window->timer->time_value, (sfVector2f){70, 0});
     sfText_setColor(window->timer->time_value, sfBlack);
 }
@@ -77,6 +73,7 @@ static void init_window_aux(window_t *window)
 
 void init_window(window_t *window)
 {
+    window->main_font = sfFont_createFromFile("font/Airport.otf");
     init_main_music(window);
     init_background(window);
     init_timer(window);

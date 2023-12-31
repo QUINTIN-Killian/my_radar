@@ -40,20 +40,17 @@ typedef struct music {
 typedef struct timer {
     sfClock *clock;
     sfText *time;
-    sfFont *time_font;
     sfText *time_value;
-    sfFont *time_value_font;
 } main_timer_t;
 
 typedef struct game_fps {
     sfClock *clock_fps;
     sfText *fps;
-    sfFont *fps_font;
     sfText *fps_value;
-    sfFont *fps_value_font;
 } game_fps_t;
 
 typedef struct window {
+    sfFont *main_font;
     int id_planes;
     int id_towers;
     bool show_hitboxes;
@@ -119,25 +116,19 @@ typedef struct quad_tree {
 typedef struct start_menu {
     sfRectangleShape *start_background;
     sfText *start_text;
-    sfFont *start_text_font;
     sfRectangleShape *launch_game_button;
     sfText *launch_game;
-    sfFont *launch_game_font;
     sfRectangleShape *leave_game_button;
     sfText *leave_game;
-    sfFont *leave_game_font;
 } start_menu_t;
 
 typedef struct pause_menu {
     sfRectangleShape *pause_background;
     sfText *pause_text;
-    sfFont *pause_text_font;
     sfRectangleShape *continue_game_button;
     sfText *continue_game;
-    sfFont *continue_game_font;
     sfRectangleShape *leave_game_button;
     sfText *leave_game;
-    sfFont *leave_game_font;
 } pause_menu_t;
 
 //file.c :
