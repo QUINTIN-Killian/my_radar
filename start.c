@@ -148,8 +148,7 @@ void start_game(window_t *window, linked_planes_t **planes_list,
         get_start_event(window);
         sfRenderWindow_display(window->window_info);
     }
-    if (!sfRenderWindow_isOpen(window->window_info))
-        destroy_start(&start);
-    else
+    destroy_start(&start);
+    if (sfRenderWindow_isOpen(window->window_info))
         main_screen(window, planes_list, towers_list);
 }
