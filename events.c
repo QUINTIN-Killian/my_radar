@@ -9,6 +9,20 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
+static void display_quad_tree_limits(sfEvent *event, window_t *window)
+{
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyQ) &&
+    window->show_quad_tree) {
+        window->show_quad_tree = False;
+        return;
+    }
+    if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyQ) &&
+    !window->show_quad_tree) {
+        window->show_quad_tree = True;
+        return;
+    }
+}
+
 void display(sfEvent *event, window_t *window)
 {
     if (event->type == sfEvtKeyPressed && sfKeyboard_isKeyPressed(sfKeyL) &&
@@ -97,6 +111,7 @@ void get_event(window_t *window)
         close_window(&event, window);
         music_play(&event, window);
         volume(&event, window);
+        display_quad_tree_limits(&event, window);
         display(&event, window);
         is_paused(&event, window);
     }

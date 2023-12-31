@@ -49,10 +49,16 @@ typedef struct game_fps {
     sfText *fps_value;
 } game_fps_t;
 
+typedef struct quad_tree_limits {
+    sfRectangleShape *v;
+    sfRectangleShape *h;
+} quad_tree_limits_t;
+
 typedef struct window {
     sfFont *main_font;
     int id_planes;
     int id_towers;
+    bool show_quad_tree;
     bool show_hitboxes;
     bool show_entities;
     bool start;
@@ -68,6 +74,7 @@ typedef struct window {
     music_t *music;
     main_timer_t *timer;
     game_fps_t *fps;
+    quad_tree_limits_t *quad_tree_limits;
 } window_t;
 
 typedef struct plane {
@@ -198,5 +205,8 @@ void start_game(window_t *window, linked_planes_t **planes_list,
 
 //start_events.c :
 void get_start_event(window_t *window);
+
+//quad_tree_limits.c :
+void init_quad_tree_limits(window_t *window);
 
 #endif

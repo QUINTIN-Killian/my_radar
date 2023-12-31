@@ -82,11 +82,22 @@ void draw_fps(window_t *window)
     sfClock_restart(window->fps->clock_fps);
 }
 
+static void draw_quad_tree_limits(window_t *window)
+{
+    if (window->show_quad_tree) {
+        sfRenderWindow_drawRectangleShape(window->window_info,
+        window->quad_tree_limits->h, NULL);
+        sfRenderWindow_drawRectangleShape(window->window_info,
+        window->quad_tree_limits->v, NULL);
+    }
+}
+
 void display_fonctions(window_t *window, linked_planes_t **planes_list,
     linked_towers_t **towers_list, quad_tree_t *quad_tree)
 {
     sfRenderWindow_drawSprite(window->window_info,
     window->background->background_sprite, NULL);
+    draw_quad_tree_limits(window);
     draw_fps(window);
     draw_towers(window, towers_list);
     draw_planes(window, planes_list, quad_tree);

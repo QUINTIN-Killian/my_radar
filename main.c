@@ -22,8 +22,6 @@ NOTES :
     my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - fix les font
-    - aficher quad tree
     - fix collisions avions hors quad tree mais qui se touchent
     - faire un menu de fin et afficher les statistiques
     des avions (pourcentage d'avions détruits...)
@@ -77,6 +75,9 @@ static void destroy_main(window_t *window,
     sfText_destroy(window->fps->fps);
     sfText_destroy(window->fps->fps_value);
     free(window->fps);
+    sfRectangleShape_destroy(window->quad_tree_limits->h);
+    sfRectangleShape_destroy(window->quad_tree_limits->v);
+    free(window->quad_tree_limits);
     destroy_main_aux(window, planes_list, towers_list);
 }
 
@@ -91,6 +92,7 @@ static void print_help(void)
     my_putstr("USER INTERACTIONS\n");
     my_putstr(" 'L' key enable/disable hitboxes and areas.\n");
     my_putstr(" 'S' key enable/disable sprites.\n");
+    my_putstr(" 'Q' key enable/disable the quad tree's hitbox.\n");
     my_putstr(" 'Escape' key in start menu leaves the game.\n");
     my_putstr(" 'Escape' key during simulation opens the pause menu.\n");
 }

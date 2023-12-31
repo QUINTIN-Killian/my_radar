@@ -78,8 +78,10 @@ void init_window(window_t *window)
     init_background(window);
     init_timer(window);
     init_fps(window);
+    init_quad_tree_limits(window);
     window->id_planes = 0;
     window->id_towers = 0;
+    window->show_quad_tree = False;
     window->show_hitboxes = False;
     window->show_entities = True;
     window->start = False;
