@@ -45,6 +45,10 @@ static void disp_planes_list_aux(linked_planes_t *tmp)
 {
     my_putstr("Id : ");
     my_put_nbr(tmp->plane_info->id);
+    my_putstr("\nCurrent coordinates : ");
+    my_put_nbr(tmp->plane_info->plane_pos.x);
+    my_putstr(", ");
+    my_put_nbr(tmp->plane_info->plane_pos.y);
     my_putstr("\nDeparture coordinates : ");
     my_put_nbr(tmp->plane_info->departure_coords.x);
     my_putstr(", ");

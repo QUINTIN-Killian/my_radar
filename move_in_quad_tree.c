@@ -36,10 +36,10 @@ static void in_bottom_left(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
     if (x < 20.0)
-        add_in_planes_list(quad_tree->top_left->under_planes_list,
+        add_in_planes_list(quad_tree->bottom_right->under_planes_list,
         cpy_plane_node(node), 0);
     if (y > -20.0)
-        add_in_planes_list(quad_tree->bottom_right->under_planes_list,
+        add_in_planes_list(quad_tree->top_left->under_planes_list,
         cpy_plane_node(node), 0);
 }
 
@@ -47,32 +47,45 @@ static void in_bottom_right(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
     if (x > -20.0)
-        add_in_planes_list(quad_tree->top_right->under_planes_list,
+        add_in_planes_list(quad_tree->bottom_left->under_planes_list,
         cpy_plane_node(node), 0);
     if (y > -20.0)
-        add_in_planes_list(quad_tree->bottom_left->under_planes_list,
+        add_in_planes_list(quad_tree->top_right->under_planes_list,
         cpy_plane_node(node), 0);
 }
 
-static void move_in_quad_tree_aux(linked_planes_t *node,
-    quad_tree_t *quad_tree)
+static void in_center(linked_planes_t *node, quad_tree_t *quad_tree)
 {
-    float x = 960.0 - node->plane_info->plane_pos.x;
-    float y = 540.0 - node->plane_info->plane_pos.y;
+    add_in_planes_list(quad_tree->top_left->under_planes_list,
+    cpy_plane_node(node), 0);
+    add_in_planes_list(quad_tree->top_right->under_planes_list,
+    cpy_plane_node(node), 0);
+    add_in_planes_list(quad_tree->bottom_left->under_planes_list,
+    cpy_plane_node(node), 0);
+    add_in_planes_list(quad_tree->bottom_right->under_planes_list,
+    cpy_plane_node(node), 0);
+}
 
+void move_in_quad_tree_aux(linked_planes_t *node,
+    quad_tree_t *quad_tree, float x, float y)
+{
+    if (x <= 20.0 && x >= -20.0 && y <= 20.0 && y >= - 20.0) {
+        in_center(node, quad_tree);
+        return;
+    }
     if (x >= 0.0 && y >= 0.0) {
         in_top_left(node, quad_tree, x, y);
         return;
     }
-    if (x <= 0.0 && y >= 0.0) {
+    if (x < 0.0 && y >= 0.0) {
         in_top_right(node, quad_tree, x, y);
         return;
     }
-    if (x >= 0.0 && y <= 0.0) {
+    if (x >= 0.0 && y < 0.0) {
         in_bottom_left(node, quad_tree, x, y);
         return;
     }
-    if (x <= 0.0 && y <= 0.0) {
+    if (x < 0.0 && y < 0.0) {
         in_bottom_right(node, quad_tree, x, y);
         return;
     }
@@ -81,9 +94,13 @@ static void move_in_quad_tree_aux(linked_planes_t *node,
 void move_in_quad_tree(linked_planes_t **planes_list, quad_tree_t *quad_tree)
 {
     linked_planes_t *node = *planes_list;
+    float x;
+    float y;
 
     while (node != NULL) {
-        move_in_quad_tree_aux(node, quad_tree);
+        x = 960.0 - node->plane_info->plane_pos.x;
+        y = 540.0 - node->plane_info->plane_pos.y;
+        move_in_quad_tree_aux(node, quad_tree, x, y);
         node = node->next;
     }
 }

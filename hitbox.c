@@ -60,7 +60,8 @@ bool search_correspondances(linked_planes_t **planes_list,
     bool ans = False;
 
     while (node2 != NULL) {
-        if (is_intersecting_planes(node1, node2) && (!node1_in_range_tower ||
+        if (node1->plane_info->id != node2->plane_info->id &&
+        is_intersecting_planes(node1, node2) && (!node1_in_range_tower ||
         !is_in_range_tower(towers_list, node2))) {
             ans = True;
             tmp = node2;
