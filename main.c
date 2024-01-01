@@ -22,7 +22,6 @@ NOTES :
     my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - fix collisions avions hors quad tree mais qui se touchent
     - faire un menu de fin et afficher les statistiques
     des avions (pourcentage d'avions détruits...)
     - fix le fait que le temps continue de
