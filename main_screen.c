@@ -21,18 +21,6 @@ static void destroy_main_screen(quad_tree_t *quad_tree)
     free(quad_tree->bottom_right);
 }
 
-static void teleport_plane(window_t *window, linked_planes_t *node)
-{
-    if (node->plane_info->plane_pos.x > window->window_size.x)
-        node->plane_info->plane_pos.x = 0;
-    if (node->plane_info->plane_pos.x < 0)
-        node->plane_info->plane_pos.x = window->window_size.x;
-    if (node->plane_info->plane_pos.y > window->window_size.y)
-        node->plane_info->plane_pos.y = 0;
-    if (node->plane_info->plane_pos.y < 0)
-        node->plane_info->plane_pos.y = window->window_size.y;
-}
-
 static linked_planes_t *change_plane_pos(window_t *window,
     linked_planes_t *node, linked_planes_t **planes_list)
 {
@@ -46,7 +34,6 @@ static linked_planes_t *change_plane_pos(window_t *window,
         node->plane_info->plane_pos.y += ((node->plane_info->arrival_coords.y -
         node->plane_info->departure_coords.y) / node->plane_info->hypothenuse)
         * node->plane_info->speed;
-        teleport_plane(window, node);
         sfSprite_setPosition(node->plane_info->plane_sprite,
         node->plane_info->plane_pos);
         if (is_arrived(node)) {
@@ -85,6 +72,7 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         sfRenderWindow_clear(window->window_info, sfWhite);
         display_fonctions(window, planes_list, towers_list, &quad_tree);
         move_planes(window, planes_list);
+        move_in_quad_tree(planes_list, &quad_tree);
         explore_quad_tree(planes_list, towers_list, &quad_tree);
         del_in_quad_tree(&quad_tree);
         get_event(window);

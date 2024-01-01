@@ -209,4 +209,7 @@ void get_start_event(window_t *window);
 //quad_tree_limits.c :
 void init_quad_tree_limits(window_t *window);
 
+//move_in_quad_tree.c :
+void move_in_quad_tree(linked_planes_t **planes_list, quad_tree_t *quad_tree);
+
 #endif

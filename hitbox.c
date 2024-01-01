@@ -52,8 +52,7 @@ static bool is_intersecting_planes(linked_planes_t *node1,
 }
 
 bool search_correspondances(linked_planes_t **planes_list,
-    linked_towers_t **towers_list, linked_planes_t **under_head,
-    linked_planes_t *node1)
+    linked_towers_t **towers_list, linked_planes_t *node1)
 {
     linked_planes_t *node2 = node1->next;
     linked_planes_t *tmp;
@@ -67,7 +66,6 @@ bool search_correspondances(linked_planes_t **planes_list,
             tmp = node2;
             node2 = node2->next;
             del_in_planes_list(planes_list, tmp->plane_info->id);
-            del_in_planes_list(under_head, tmp->plane_info->id);
         } else
             node2 = node2->next;
     }
@@ -82,14 +80,12 @@ void collision(linked_planes_t **planes_list, linked_towers_t **towers_list,
     bool del = False;
 
     while (node1 != NULL) {
-        del = search_correspondances(planes_list, towers_list,
-        under_head, node1);
+        del = search_correspondances(planes_list, towers_list, node1);
         if (del) {
             del = False;
             tmp = node1;
             node1 = node1->next;
             del_in_planes_list(planes_list, tmp->plane_info->id);
-            del_in_planes_list(under_head, tmp->plane_info->id);
         } else
             node1 = node1->next;
     }

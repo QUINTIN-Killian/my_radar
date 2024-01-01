@@ -9,7 +9,7 @@
 #include "include/my.h"
 #include "include/my_radar.h"
 
-void del_in_quad_tree_aux(quad_tree_t *quad_tree)
+static void del_in_quad_tree_aux(quad_tree_t *quad_tree)
 {
     linked_planes_t *node;
 
