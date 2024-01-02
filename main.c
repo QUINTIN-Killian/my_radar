@@ -22,7 +22,7 @@ NOTES :
     my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - errro handling coordonnées données hors limites écran
+    - error handling coordonnées données hors limites écran
     - faire un menu de fin et afficher les statistiques
     des avions (pourcentage d'avions détruits...)
     - fix le fait que le temps continue de
@@ -81,26 +81,14 @@ static void destroy_main(window_t *window,
     destroy_main_aux(window, planes_list, towers_list);
 }
 
-static void print_help(void)
-{
-    my_putstr("Air traffic simulation panel\n\n");
-    my_putstr("USAGE\n");
-    my_putstr(" ./my_radar [OPTIONS] path_to_script\n");
-    my_putstr("  path_to_script     The path to the script file.\n\n");
-    my_putstr("OPTIONS\n");
-    my_putstr(" -h                print the usage and quit.\n\n");
-    my_putstr("USER INTERACTIONS\n");
-    my_putstr(" 'L' key enable/disable hitboxes and areas.\n");
-    my_putstr(" 'S' key enable/disable sprites.\n");
-    my_putstr(" 'Q' key enable/disable the quad tree's hitbox.\n");
-    my_putstr(" 'Escape' key in start menu leaves the game.\n");
-    my_putstr(" 'Escape' key during simulation opens the pause menu.\n");
-}
-
 static int help(int ac, char **av)
 {
     if (ac == 2 && my_strcmp(av[1], "-h") == 0) {
         print_help();
+        return 1;
+    }
+    if (ac == 2 && my_strcmp(av[1], "-fh") == 0) {
+        print_file_help();
         return 1;
     }
     return 0;

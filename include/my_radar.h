@@ -138,6 +138,10 @@ typedef struct pause_menu {
     sfText *leave_game;
 } pause_menu_t;
 
+//help.c :
+void print_help(void);
+void print_file_help(void);
+
 //file.c :
 char **get_buffer_file(char *filepath);
 void add_elt(char **word_array, window_t *window,
