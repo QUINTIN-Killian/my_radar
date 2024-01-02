@@ -11,13 +11,21 @@
 
 static int check_aircraft(char **word_array, int *ind)
 {
+    int nbr;
+
     if (*ind + 7 > my_strlen_array(word_array))
         return 84;
     *ind = *ind + 1;
     for (int i = 0; i < 6; i++) {
-        if (!my_str_isnum(word_array[*ind])) {
+        if (!my_str_isnum(word_array[*ind]))
             return 84;
-        }
+        nbr = convert_str_in_int(word_array[*ind]);
+        if ((i == 0 || i == 2) && nbr > 1920)
+            return 84;
+        if ((i == 1 || i == 3) && nbr > 1080)
+            return 84;
+        if (i == 4 && nbr > 20)
+            return 84;
         *ind = *ind + 1;
     }
     return 0;
@@ -25,13 +33,21 @@ static int check_aircraft(char **word_array, int *ind)
 
 static int check_tower(char **word_array, int *ind)
 {
+    int nbr;
+
     if (*ind + 4 > my_strlen_array(word_array))
         return 84;
     *ind = *ind + 1;
     for (int i = 0; i < 3; i++) {
-        if (!my_str_isnum(word_array[*ind])) {
+        if (!my_str_isnum(word_array[*ind]))
             return 84;
-        }
+        nbr = convert_str_in_int(word_array[*ind]);
+        if (i == 0 && nbr > 1920)
+            return 84;
+        if (i == 1 && nbr > 1080)
+            return 84;
+        if (i == 2 && (nbr > 20 || nbr < 1))
+            return 84;
         *ind = *ind + 1;
     }
     return 0;
