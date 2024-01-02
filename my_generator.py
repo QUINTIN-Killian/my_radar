@@ -37,7 +37,7 @@ def generator(infos):
     for i in range(infos.nb_planes):
         file.write(f"A  {randint(0, 1920)} {randint(0, 1080)}  {randint(0, 1920)} {randint(0, 1080)}  {randint(1, 20)}  {randint(0, 20)}\n")
     for i in range(infos.nb_towers):
-        file.write(f"T  {randint(0, 1920)} {randint(0, 1080)}  {randint(0, 20)}\n")
+        file.write(f"T  {randint(0, 1920)} {randint(0, 1080)}  {randint(1, 20)}\n")
     file.close()
 
 if __name__ == "__main__":
