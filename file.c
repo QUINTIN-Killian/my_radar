@@ -46,7 +46,7 @@ static int check_tower(char **word_array, int *ind)
             return 84;
         if (i == 1 && nbr > 1080)
             return 84;
-        if (i == 2 && (nbr > 20 || nbr < 1))
+        if (i == 2 && nbr < 1)
             return 84;
         *ind = *ind + 1;
     }

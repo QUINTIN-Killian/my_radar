@@ -38,7 +38,7 @@ static void print_file_help_aux(void)
     my_putstr("1920)\n");
     my_putstr("  POSITION Y      The towers's ordinate position (from 0 to ");
     my_putstr("1080)\n");
-    my_putstr("  RADIUS          The towers's view range (from 1 to 20)\n\n");
+    my_putstr("  RADIUS          The towers's view range (from 1 to inf)\n\n");
     my_putstr("  note that for each number given, its absolute value is ");
     my_putstr("used in the program\n");
 }
