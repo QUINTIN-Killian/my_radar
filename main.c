@@ -22,12 +22,10 @@ NOTES :
     my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - error handling coordonnées données hors limites écran
     - faire un menu de fin et afficher les statistiques
     des avions (pourcentage d'avions détruits...)
     - fix le fait que le temps continue de
     tourner alors que le jeu est en pause
-    - faire un quad tree dynamique
 */
 
 #include "include/my.h"
