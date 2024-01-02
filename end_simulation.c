@@ -23,9 +23,3 @@ int is_arrived(linked_planes_t *node)
     }
     return 0;
 }
-
-void end(window_t *window, linked_planes_t **planes_list)
-{
-    if (my_planes_list_len(planes_list) == 0)
-        sfRenderWindow_close(window->window_info);
-}
