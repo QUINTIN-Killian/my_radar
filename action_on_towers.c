@@ -103,7 +103,8 @@ static void init_new_node_sprite(linked_towers_t *new_node)
     sfSprite_setScale(new_node->tower_sprite, (sfVector2f){0.1, 0.1});
     new_node->range = sfCircleShape_create();
     sfCircleShape_setPosition(new_node->range, (sfVector2f)
-    {new_node->tower_pos.x - new_node->radius, new_node->tower_pos.y - new_node->radius});
+    {new_node->tower_pos.x - new_node->radius, new_node->tower_pos.y -
+    new_node->radius});
     sfCircleShape_setRadius(new_node->range, (float)new_node->radius);
     sfCircleShape_setOutlineThickness(new_node->range, 3.0);
     sfCircleShape_setOutlineColor(new_node->range, sfBlack);
