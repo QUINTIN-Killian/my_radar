@@ -13,10 +13,10 @@
 static void in_top_left(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
-    if (x < 20.0)
+    if (x < 10.0)
         add_in_planes_list(quad_tree->top_right->under_planes_list,
         cpy_plane_node(node), 0);
-    if (y < 20.0)
+    if (y < 10.0)
         add_in_planes_list(quad_tree->bottom_left->under_planes_list,
         cpy_plane_node(node), 0);
 }
@@ -24,10 +24,10 @@ static void in_top_left(linked_planes_t *node, quad_tree_t *quad_tree,
 static void in_top_right(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
-    if (x > -20.0)
+    if (x > -10.0)
         add_in_planes_list(quad_tree->top_left->under_planes_list,
         cpy_plane_node(node), 0);
-    if (y < 20.0)
+    if (y < 10.0)
         add_in_planes_list(quad_tree->bottom_right->under_planes_list,
         cpy_plane_node(node), 0);
 }
@@ -35,10 +35,10 @@ static void in_top_right(linked_planes_t *node, quad_tree_t *quad_tree,
 static void in_bottom_left(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
-    if (x < 20.0)
+    if (x < 10.0)
         add_in_planes_list(quad_tree->bottom_right->under_planes_list,
         cpy_plane_node(node), 0);
-    if (y > -20.0)
+    if (y > -10.0)
         add_in_planes_list(quad_tree->top_left->under_planes_list,
         cpy_plane_node(node), 0);
 }
@@ -46,10 +46,10 @@ static void in_bottom_left(linked_planes_t *node, quad_tree_t *quad_tree,
 static void in_bottom_right(linked_planes_t *node, quad_tree_t *quad_tree,
     float x, float y)
 {
-    if (x > -20.0)
+    if (x > -10.0)
         add_in_planes_list(quad_tree->bottom_left->under_planes_list,
         cpy_plane_node(node), 0);
-    if (y > -20.0)
+    if (y > -10.0)
         add_in_planes_list(quad_tree->top_right->under_planes_list,
         cpy_plane_node(node), 0);
 }
@@ -69,7 +69,7 @@ static void in_center(linked_planes_t *node, quad_tree_t *quad_tree)
 void move_in_quad_tree_aux(linked_planes_t *node,
     quad_tree_t *quad_tree, float x, float y)
 {
-    if (x <= 20.0 && x >= -20.0 && y <= 20.0 && y >= - 20.0) {
+    if (x < 10.0 && x > -10.0 && y < 10.0 && y > -10.0) {
         in_center(node, quad_tree);
         return;
     }
