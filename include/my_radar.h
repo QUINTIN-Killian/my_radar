@@ -138,6 +138,23 @@ typedef struct pause_menu {
     sfText *leave_game;
 } pause_menu_t;
 
+typedef struct end_menu {
+    sfRectangleShape *end_background;
+    sfText *end_text;
+    sfRectangleShape *leave_game_button;
+    sfText *leave_game;
+    sfText *total_planes_text;
+    sfText *total_planes_value;
+    sfText *arrived_planes_text;
+    sfText *arrived_planes_value;
+    sfText *percentage_arrived_planes_text;
+    sfText *percentage_arrived_planes_value;
+    sfText *destroyed_planes_text;
+    sfText *destroyed_planes_value;
+    sfText *percentage_destroyed_planes_text;
+    sfText *percentage_destroyed_planes_value;
+} end_menu_t;
+
 //help.c :
 void print_help(void);
 void print_file_help(void);
@@ -186,7 +203,6 @@ void get_plane_travel_info(linked_planes_t *node);
 
 //end_simulation.c :
 int is_arrived(linked_planes_t *node);
-void end(window_t *window, linked_planes_t **planes_list);
 
 //hitbox.c :
 void init_hitbox(linked_planes_t *node);
@@ -215,5 +231,18 @@ void init_quad_tree_limits(window_t *window);
 
 //move_in_quad_tree.c :
 void move_in_quad_tree(linked_planes_t **planes_list, quad_tree_t *quad_tree);
+
+//end_statistics.c :
+void init_total_planes(window_t *window, end_menu_t *end);
+void init_arrived_planes(window_t *window, end_menu_t *end);
+void init_percentage_arrived_planes(window_t *window, end_menu_t *end);
+void init_destroyed_planes(window_t *window, end_menu_t *end);
+void init_percentage_destroyed_planes(window_t *window, end_menu_t *end);
+
+//end_simulation.c :
+void end_screen(window_t *window);
+
+//end_events.c :
+void get_end_event(window_t *window);
 
 #endif

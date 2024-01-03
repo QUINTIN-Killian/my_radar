@@ -79,4 +79,5 @@ void main_screen(window_t *window, linked_planes_t **planes_list,
         sfRenderWindow_display(window->window_info);
     }
     destroy_main_screen(&quad_tree);
+    end_screen(window);
 }

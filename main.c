@@ -6,24 +6,8 @@
 ** main
 */
 /*
-NOTES :
-    my_putstr("STATS\nTotal planes : ");
-    my_put_nbr(window->total_planes);
-    my_putstr("\nArrived planes : ");
-    my_put_nbr(window->arrived_planes);
-    my_putstr("\nPercentage of arrived planes : ");
-    my_put_nbr(100 * window->arrived_planes / window->total_planes);
-    my_putchar('%');
-    my_putstr("\nDestroyed planes : ");
-    my_put_nbr(window->total_planes - window->arrived_planes);
-    my_putstr("\nPercentage of destroyed planes : ");
-    my_put_nbr(100 * (window->total_planes - window->arrived_planes) /
-    window->total_planes);
-    my_putchar('%');
 OBJECTIFS :
     - compléter le -h
-    - faire un menu de fin et afficher les statistiques
-    des avions (pourcentage d'avions détruits...)
     - fix le fait que le temps continue de
     tourner alors que le jeu est en pause
 */
