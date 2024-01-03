@@ -8,8 +8,6 @@
 /*
 OBJECTIFS :
     - compléter le -h
-    - fix le fait que le temps continue de
-    tourner alors que le jeu est en pause
 */
 
 #include "include/my.h"
