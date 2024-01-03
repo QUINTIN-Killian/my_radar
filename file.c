@@ -58,11 +58,11 @@ char **check_buffer_content(char **word_array)
     int ind = 0;
     int ans = 0;
 
-    if (my_strlen_array(word_array) == 0)
-        return NULL;
     while (ind < my_strlen_array(word_array)) {
         if (ans != 0 || (my_strcmp(word_array[ind], "A") != 0 &&
         my_strcmp(word_array[ind], "T") != 0)) {
+            write(2, "ERROR : the file content is incorrect ", 38);
+            write(2, "(./<bin> -fh to get help).", 26);
             return NULL;
         }
         if (my_strcmp(word_array[ind], "A") == 0) {
@@ -109,8 +109,11 @@ char **get_buffer_file(char *filepath)
         return NULL;
     }
     word_array = create_word_array(&st, fd);
-    if (word_array == NULL)
+    if (word_array == NULL || my_strlen_array(word_array) == 0) {
+        write(2, "ERROR : the file content is incorrect ", 38);
+        write(2, "(./<bin> -fh to get help).", 26);
         return NULL;
+    }
     return check_buffer_content(word_array);
 }
 
